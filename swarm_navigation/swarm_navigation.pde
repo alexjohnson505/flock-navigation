@@ -13,27 +13,23 @@ color initColor =  color (0, 0, 0);
 
 void setup() {
   size(displayWidth / 2, displayHeight / 2);
-  swarm1 = new Swarm();
-  swarm2 = new Swarm();
+  swarm1 = new Swarm(color(0));
+  swarm2 = new Swarm(color(250));
 }
 
 void draw() {
   background(160, 211, 224);
+  
+  // Update swarms
   swarm1.move();
   swarm2.move();
 }
 
 void mouseClicked() {
-  swarm1.addVehicle(newFish(color(0)));
-  swarm2.addVehicle(newFish(color(250)));
+  
+  // Testing: Add fish to both 
+  swarm1.addFish();
+  swarm2.addFish();
 }
 
-Vehicle newFish(color c){
-  initLocation.x = displayWidth / 4;
-  initLocation.y = displayHeight / 4;
-  initAcceleration.x = random(-0.7, 0.7);
-  initAcceleration.y = random(-0.7, 0.7);
-  
-  Vehicle v = new Vehicle(initLocation, initAcceleration, c);
-  return v;
-}
+
