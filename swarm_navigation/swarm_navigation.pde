@@ -12,7 +12,7 @@ PVector initAcceleration = new PVector(0, 0);
 color initColor =  color (0, 0, 0);
 
 void setup() {
-  size(displayWidth / 2, displayHeight / 2);
+  size(displayWidth / 3, displayHeight);
   swarm1 = new Swarm(color(0));
   swarm2 = new Swarm(color(250));
 }

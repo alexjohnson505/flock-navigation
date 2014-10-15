@@ -50,9 +50,7 @@ class Vehicle {
     velocity = new PVector(0, 0);
   }
 
-  // --------------------------------------------------------------------
-  // fly: have the flock fly by running through each vehicle in
-  // the arraylist of vehicles, also takes care of update/border/display
+  // Fly: Iterate update swarm. Update/border/display
   void fly(ArrayList < Vehicle > vehicles) {
     flock(vehicles);
     update();
@@ -60,111 +58,110 @@ class Vehicle {
     display();
   }
 
-  // --------------------------------------------------------------------  
-  // update: update location & acceleration
+  // Update: location & acceleration
   void update() {
     velocity.add(acceleration); // update velocity
-    velocity.limit(maxSpeed); // limit speed
-    location.add(velocity); // add velocity to location
-    acceleration.mult(0); // reset acceleration to 0 each cycle
+    velocity.limit(maxSpeed);   // limit speed
+    location.add(velocity);     // add velocity to location
+    acceleration.mult(0);       // reset acceleration to 0 each cycle
   }
-
-  // --------------------------------------------------------------------
-  // display: draw a triangle rotated in the direction of velocity
+  
+  // Display: Render our 'fish'
   void display() {
     float theta = velocity.heading2D() + radians(90);
     fill(myColor);
     stroke(0);
     strokeWeight(1);
     pushMatrix();
-    translate(location.x, location.y);
-    rotate(theta);
-    beginShape();
-    vertex(0, -r * 2);
-    vertex(-r, r * 2);
-    vertex(r, r * 2);
-    endShape(CLOSE);
+      translate(location.x, location.y);
+      rotate(theta);
+      beginShape();
+      vertex(0, -r * 2);
+      vertex(-r, r * 2);
+      vertex(r, r * 2);
+      endShape(CLOSE);
     popMatrix();
   }
 
   // --------------------------------------------------------------------
-  // flock: accumulate a new acceleration each time based on 
-  // the three rules: 1. separation (steer to avoid crowding 
-  // local flockmates); 2. alignment (steer towards the average 
-  // heading of local flockmates); and 3. cohesion (steer to 
-  // move toward the average position of local flockmates).
-  // Each of the vehicles (or as Reynolds calls them, boids) has 
-  // direct access to the whole flock, but flocking requires that 
-  // each vehicle reacts only to flockmates within a small area 
-  // around itself, characterized by a distance between the vehicles
-  //  and an angle, measured from the vehicle's direction of movement. 
-  // Flockmates outside this local area are  ignored. The area could 
-  // be considered a model of limited  perception (as by fish in 
-  // murky water) but it is probably more correct to think of it as 
-  // defining the region in which flockmates influence a vehicle's 
-  // steering, from http://www.red3d.com/cwr/boids/
+  // Flock: Accumulate new acceleration based on: 
+  //   1. separation (steer to avoid crowding local flockmates)
+  //   2. alignment (steer towards the average heading of local flockmates)
+  //   3. cohesion (steer to move toward the average position of local flockmates).
+  // 
+  // Each vehicle only reacts to *nearby* mates. ( determined by distance & direction )
+  // More information: http://www.red3d.com/cwr/boids/
+  
   void flock(ArrayList < Vehicle > vehicles) {
-    // the three forces as per Reynolds
-    PVector separationForce = separation(vehicles);
-    PVector alignmentForce = alignment(vehicles);
-    PVector cohesionForce = cohesion(vehicles);
+    
+    PVector separationForce = separation(vehicles); // 1.) Seperation
+    PVector alignmentForce = alignment(vehicles);   // 2.) Alighment
+    PVector cohesionForce = cohesion(vehicles);     // 3.) Cohesion
+    
     // arbitrarily weight these forces
     separationForce.mult(separationWeight);
     alignmentForce.mult(alignmentWeight);
     cohesionForce.mult(cohesionWeight);
-    // add each of the force vectors to acceleration
+    
+    // Each force vector influences acceleration
     applyForce(separationForce);
     applyForce(alignmentForce);
     applyForce(cohesionForce);
   }
-
-  // --------------------------------------------------------------------
-  // seeking: calculate and apply a steering force towards
-  // a target, returns steering vector, see also seek
+  
+  // Seeking:  Calculate steering vector (given target)
   PVector seeking(PVector target) {
-    // A vector pointing from the location to the target
+    
+    // Vector towards desired location
     PVector desired = PVector.sub(target, location);
-    // Normalize desired and scale to maximum speed
+    
+    // Normalize & scale the desired vector
     desired.normalize();
     desired.mult(maxSpeed);
-    // Steering = Desired minus Velocity
+    
+    // Subtract Velocity from Desired to calculate Steering
     PVector steer = PVector.sub(desired, velocity);
-    steer.limit(maxForce); // Limit to maximum steering force
+    
+    steer.limit(maxForce); // Limit max steerings
     return steer;
   }
 
-  // --------------------------------------------------------------------
-  // seek: calculates and applies a steering force towards a target
+  // Seek: Applies steering force to target
   void seek(PVector target) {
-    // a vector pointing from the location to the target
+    
+    // Vector towards target
     PVector desired = PVector.sub(target, location);
-    // normalize desired and scale to maximum speed
+    
+    // Normalize & scale the desired vector
     desired.normalize();
     desired.mult(maxSpeed);
+    
     // steer = desired - velocity
     PVector steer = PVector.sub(desired, velocity);
-    // limit to maximum steering force
-    steer.limit(maxForce);
+    
+    steer.limit(maxForce); // Limit max
     applyForce(steer);
   }
 
-  // --------------------------------------------------------------------
-  // flee: calculates and applies a steering force away from a target
+  // Flee: applies steering force away from a target
   void flee(PVector t) {
     PVector desiredVelocity = new PVector();
     desiredVelocity = PVector.sub(t, location);
     desiredVelocity.normalize();
     desiredVelocity.mult(maxSpeed);
+    
     PVector steer = desiredVelocity;
     steer.sub(velocity);
     steer.limit(maxForce);
     acceleration.sub(steer);
   }
 
-  // --------------------------------------------------------------------
-  // arrive: calculates a steering force towards a target with 
-  // damping so we don't overshoot the target, arrive behavior 
-  // demonstrates "desired minus velocity" 
+  // Arrive: Calculate steering force towards a target.
+  // Apply damping to avoid overshooting
+  
+  // ... arrive behavior 
+  // demonstrates "desired minus velocity"
+  
   void arrive(PVector target) {
     // desired is a vector pointing from our location to the target
     PVector desired = PVector.sub(target, location);
@@ -185,8 +182,7 @@ class Vehicle {
     applyForce(steer);
   }
 
-  // --------------------------------------------------------------------
-  // borders: handle wraparound behavior 
+  // Borders: Support wrap-around movement 
   void borders() {
     if (location.x < -r) location.x = width + r;
     if (location.y < -r) location.y = height + r;
@@ -194,18 +190,22 @@ class Vehicle {
     if (location.y > height + r) location.y = -r;
   }
 
-  // --------------------------------------------------------------------
-  // separation (for flocking behavior): checks for nearby 
-  // vehicles and steers away frin them, returns steering vector
+  // Separation: Check nearby. Steer away. 
   PVector separation(ArrayList < Vehicle > vehicles) {
+    
     float desiredseparation = 35.0f;
     PVector steer = new PVector(0, 0, 0);
     int count = 0;
-    // For every vehicle in the system, check if it's too close
+    
+    // Check proximity for all vehicles
     for (Vehicle other: vehicles) {
+      
       float d = PVector.dist(location, other.location);
-      // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
+     
+      // Find targets within range
+      // Note: 0 = distance to self.
       if ((d > 0) && (d < desiredseparation)) {
+        
         // Calculate vector pointing away from neighbor
         PVector diff = PVector.sub(location, other.location);
         diff.normalize();
@@ -214,13 +214,16 @@ class Vehicle {
         count++; // keep track of how many
       }
     }
+    
     // average 
     if (count > 0) {
       steer.div((float) count);
     }
+    
     // as long as the vector is greater than 0
     if (steer.mag() > 0) {
-      // implement Reynolds: steering = desired - velocity
+      
+      // steering = desired - velocity
       steer.normalize();
       steer.mult(maxSpeed);
       steer.sub(velocity);
@@ -229,16 +232,16 @@ class Vehicle {
     return steer;
   }
 
-  // --------------------------------------------------------------------
-  // separate: checks for nearby vehicles and steers away from them
-  // handles application of the steering force
+  // Seperate: Check nearby vehicles. Apply force to steer away  
   void separate(ArrayList < Vehicle > vehicles) {
     float desiredseparation = r * 2;
     PVector sum = new PVector();
     int count = 0;
-    // For every boid in the system, check if it's too close
+    
+    // Check proximity of all vehicles
     for (Vehicle other: vehicles) {
       float d = PVector.dist(location, other.location);
+      
       // If the distance is greater than 0 and less than 
       // an arbitrary amount (0 when you are yourself)
       if ((d > 0) && (d < desiredseparation)) {
@@ -264,12 +267,12 @@ class Vehicle {
   }
 
   // --------------------------------------------------------------------
-  // alignment: for every nearby vehicle in the system, 
-  // calculate the average velocity
+  // Alignment: Average velocity of nearby vehicles
   PVector alignment(ArrayList < Vehicle > vehicles) {
     // neighborDistance defined as an instance variable
     PVector sum = new PVector(0, 0);
     int count = 0;
+    
     for (Vehicle other: vehicles) {
       float d = PVector.dist(location, other.location);
       if ((d > 0) && (d < neighborDistance)) {
@@ -277,6 +280,7 @@ class Vehicle {
         count++;
       }
     }
+    
     if (count > 0) {
       sum.div((float) count);
       sum.normalize();
@@ -289,12 +293,12 @@ class Vehicle {
     }
   }
 
-  // --------------------------------------------------------------------
-  // cohesion: for the average location (i.e. center) of all nearby 
-  // vehicles, calculate steering vector towards that location
+  // Cohesion: Steer towards average center location of nearby vehicles
   PVector cohesion(ArrayList < Vehicle > vehicles) {
+    
     // Start with empty vector to accumulate all locations
     PVector sum = new PVector(0, 0);
+    
     int count = 0;
     for (Vehicle other: vehicles) {
       float d = PVector.dist(location, other.location);
@@ -310,51 +314,50 @@ class Vehicle {
       return new PVector(0, 0);
     }
   }
-
-  // --------------------------------------------------------------------
-  // wander: implement Craig Reynolds' wandering vehicle behavior,
+  
+  // Wander: implement Craig Reynolds' wandering vehicle behavior.
   // vehicle predicts future location as a fixed distance in the 
   // direction of its velocity, draws a circle with radius r at that 
   // location, and picks a random point along the circumference of 
-  // the circle to use as the locaiton towards which it will wander
+  // the circle to use as the locaton towards which it will wander
   void wander() {
+    
     // random point on the circle
     wanderTheta += random(-wanderThetaChange, wanderThetaChange);
+    
     // calculate new location to steer towards on the wander circle
     PVector circleloc = velocity.get(); // start with velocity
     circleloc.normalize(); // normalize to get heading
     circleloc.mult(wanderDistance); // multiply by distance
     circleloc.add(location); // make it relative to boid's location
+    
     // We need to know the heading to offset wanderTheta
     float h = velocity.heading2D();
     PVector circleOffSet = new PVector(wanderRadius * cos(wanderTheta + h), wanderRadius * sin(wanderTheta + h));
     PVector target = PVector.add(circleloc, circleOffSet);
     seek(target);
+    
     // Render wandering circle, etc. 
     if (wanderTrace) drawWanderTarget(location, circleloc, target, wanderRadius);
   }
 
-  // --------------------------------------------------------------------
-  // applyForce: apply an additional force to our current acceleration
+  // applyForce: add force to current acceleration
   void applyForce(PVector force) {
-    // add mass here if you want acceleration = force / mass
+    // Note: add mass here if you want acceleration = force / mass
     acceleration.add(force);
   }
 
 
-  // --------------------------------------------------------------------
-  // setMaxSpeed: set the maximum speed for the vehicle
+  // setMaxSpeed: set the maximum speed
   void setMaxSpeed(float m) {
     maxSpeed = m;
   }
 
-  // --------------------------------------------------------------------
-  // setMaxForce: set the maximum force that can be applied
+  // setMaxForce: set the maximum force
   void setMaxForce(float f) {
     maxForce = f;
   }
 
-  // --------------------------------------------------------------------
   // drawWanderTarget: draw the circle associated with wandering
   void drawWanderTarget(PVector location, PVector circle, PVector target, float rad) {
     stroke(188, 188, 255);
