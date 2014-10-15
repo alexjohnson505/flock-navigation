@@ -5,6 +5,8 @@ final int margin = 40;
 final int initialCount = 20;
 
 // Global Variables
+// ArrayList<Swarm> swarms;
+
 Swarm swarm1;
 Swarm swarm2;
 
