@@ -7,6 +7,9 @@ final int initialCount = 20;
 // Global Variables
 Swarm swarm1;
 Swarm swarm2;
+
+Food food = new Food();
+
 PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
 color initColor =  color (0, 0, 0);
@@ -23,6 +26,7 @@ void draw() {
   // Update swarms
   swarm1.move();
   swarm2.move();
+  food.draw();
 }
 
 void mouseClicked() {
@@ -30,6 +34,5 @@ void mouseClicked() {
   // Testing: Add fish to both 
   swarm1.addFish();
   swarm2.addFish();
+  food.addFood();
 }
-
-
