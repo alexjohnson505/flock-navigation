@@ -56,7 +56,6 @@ class Vehicle {
     update();
     borders();
     display();
-    collision();
   }
 
   // Update: location & acceleration
@@ -85,15 +84,7 @@ class Vehicle {
   }
   
   boolean collision(){
-    boolean a;
-    if (food.collision(location)){
-      a = true;
-      ellipse(50, 50, 100, 100);
-    } else {
-      a = false;
-    }
-    
-    return a;
+    return food.collision(location); 
   }
 
   // --------------------------------------------------------------------

@@ -20,6 +20,8 @@ class Swarm {
     // Iterate through vehicles
     for (Vehicle v : vehicles) {
       v.fly(vehicles);
+      if (v.collision()){
+      }
      }
   }
 

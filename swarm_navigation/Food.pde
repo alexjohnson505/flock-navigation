@@ -26,26 +26,28 @@ class Food {
     food.remove(index);
   }
   
+  // Does a (the fish's location) collide with b (a food item)
   boolean collision(PVector a){
+    float threshold = 8.5;
+    
+    boolean collision = false;
+    
+    // Iterate through food 
     for (int i = food.size() - 1; i >= 0; i--){
       PVector b = food.get(i);
      
-      float x1 = abs(a.x - b.x);
-      float x2 = abs(a.y - b.y);
+      float horizontalDifference = abs(a.x - b.x);
+      float verticalDifference = abs(a.y - b.y);
       
-      boolean x;
-      x = (x1 < 10) && (x2 < 10);
+      collision = (horizontalDifference < threshold) && (verticalDifference < threshold);
       
-      
-      if (x){
+      if (collision){
         food.remove(i);
-        return x;
+        addFood();
       }
-      
     }
     
-    return false;
-
+    return collision;
   }
     
 }
