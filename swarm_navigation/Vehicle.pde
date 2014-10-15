@@ -1,4 +1,4 @@
-// 
+
 class Vehicle {
 
   /***************************
@@ -50,12 +50,13 @@ class Vehicle {
     velocity = new PVector(0, 0);
   }
 
-  // Fly: Iterate update swarm. Update/border/display
+  // Fly: Iterate & update swarm. Update/border/display
   void fly(ArrayList < Vehicle > vehicles) {
     flock(vehicles);
     update();
     borders();
     display();
+    collision();
   }
 
   // Update: location & acceleration
@@ -81,6 +82,18 @@ class Vehicle {
       vertex(r, r * 2);
       endShape(CLOSE);
     popMatrix();
+  }
+  
+  boolean collision(){
+    boolean a;
+    if (food.collision(location)){
+      a = true;
+      ellipse(50, 50, 100, 100);
+    } else {
+      a = false;
+    }
+    
+    return a;
   }
 
   // --------------------------------------------------------------------

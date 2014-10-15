@@ -19,6 +19,11 @@ void setup() {
  
   swarms.add(swarm1);
   swarms.add(swarm2);
+  
+  // Start w/ 10 fish
+  for (int i = 10; i > 0; i--){
+    mouseClicked();
+  } 
 }
 
 void draw() {
