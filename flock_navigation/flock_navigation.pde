@@ -5,19 +5,19 @@ final int margin = 40;
 final int initialCount = 20;
 
 // Global Variables
-Flock flock;
+Swarm swarm;
 PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
 color initColor =  color (0, 0, 0);
 
 void setup() {
   size(displayWidth / 2, displayHeight / 2);
-  flock = new Flock();
+  swarm = new Swarm();
 }
 
 void draw() {
   background(160, 211, 224);
-  flock.fly();
+  swarm.move();
 }
 
 void mouseClicked() {
@@ -32,7 +32,7 @@ void addFish(){
   initAcceleration.y = random(-0.7, 0.7);
   
   // New fish
-  Vehicle v = new Vehicle(initLocation, initAcceleration, color(51));
-  flock.addVehicle(v);
+  Vehicle v = new Vehicle(initLocation, initAcceleration, color(250));
+  swarm.addVehicle(v);
 }
 
