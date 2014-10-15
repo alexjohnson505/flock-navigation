@@ -1,40 +1,46 @@
-
-// METHOD SUMMARY
-// -----------------------------------------------------------------------
-
-//
+// 
 class Vehicle {
+
+  /***************************
+      STATUS VARIABLES SETTINGS
+   ***************************/
 
   PVector location;
   PVector velocity;
   PVector acceleration;
 
-  float r = 6;           // our size in terms of radius
-  float maxForce = 0.03; // maximum steering force
+  /***************************
+      VEHICLE SETTINGS
+   ***************************/
+
+  color myColor;
+  
+  float r = 6;             // our size in terms of radius
+  float maxForce = 0.03;   // maximum steering force
   float maxSpeed = 2.5;    // maximum speed
 
-  color myColor; // what color are we?
-
-  // arrival variables
   float damping = 100; // arrival damping in pixels
+  float neighborDistance = 50; // cohesion variables
 
-  // wander variables
-  float wanderRadius = 25; // radius for our "wander circle"
-  float wanderDistance = 80; // distance for our "wander circle"
+  /***************************
+      WANDER SETTINGS
+   ***************************/
+   
+  float wanderRadius = 10;       // radius for our "wander circle"
+  float wanderDistance = 80;     // distance for our "wander circle"
   float wanderThetaChange = 0.3; // amount to change wander theta
   boolean wanderTrace = false;
   float wanderTheta;
 
-  // cohesion variables
-  float neighborDistance = 50;
-
-  // flocking variables
+  /***************************
+      FLOCKING SETTINGS
+   ***************************/
+   
   float separationWeight = 1.5;
   float alignmentWeight = 1.0;
   float cohesionWeight = 1.0;
 
-  // --------------------------------------------------------------------
-  // Vehicle (location_vector, acceleration_vector, color)
+  // Construction: Vehicle (location_vector, acceleration_vector, color)
   Vehicle(PVector l, PVector a, color c) {
 
     // use default r, maxSpeed, maxForce
@@ -55,7 +61,7 @@ class Vehicle {
   }
 
   // --------------------------------------------------------------------  
-  // update: update location
+  // update: update location & acceleration
   void update() {
     velocity.add(acceleration); // update velocity
     velocity.limit(maxSpeed); // limit speed
