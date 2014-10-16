@@ -6,7 +6,7 @@ PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
 color initColor =  color (0, 0, 0);
 
-int startSwarms = 5;
+int startSwarms = 3;
 int startFish   = 10;
 
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
@@ -53,9 +53,19 @@ void draw() {
 void drawHUD() {
    for (int i = swarms.size() - 1 ; i >= 0; i--){
      Swarm s = swarms.get(i);
-     fill(s.getColor());
-     textSize(15);
-     text( "Swarm Score : " + s.score, 10, 20 * i + 30);
+     
+     int y = 25 * i + 30;
+     
+     pushMatrix();
+       translate(20, y);
+       
+       fill(s.getColor());
+       rect(0, -10, 20, 10);
+       
+       fill(0);
+       textSize(15);
+       text("Swarm Score : " + s.score, 30, 0);
+     popMatrix();
    }
 }
 

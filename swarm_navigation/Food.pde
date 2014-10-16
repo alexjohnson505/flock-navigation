@@ -30,7 +30,7 @@ class Food {
   // Does a (the fish's location) collide with b (a food item)
   boolean collision(PVector a){
     float threshold = 8.5;
-    
+    boolean acc = false;
     boolean collision = false;
     
     // Iterate through food 
@@ -49,7 +49,10 @@ class Food {
       }
     }
     
-    return collision;
+    acc = collision || acc;
+    
+    return acc;
+    
   }
     
 }
