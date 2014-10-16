@@ -31,7 +31,7 @@ class Food {
   boolean collision(PVector a){
     float threshold = 8.5;
     boolean acc = false;
-    boolean collision = false;
+    
     
     // Iterate through food 
     for (int i = food.size() - 1; i >= 0; i--){
@@ -40,16 +40,21 @@ class Food {
       float horizontalDifference = abs(a.x - b.x);
       float verticalDifference = abs(a.y - b.y);
       
-      collision = (horizontalDifference < threshold) && (verticalDifference < threshold);
+      boolean collision = (horizontalDifference < threshold) && (verticalDifference < threshold);
       
       if (collision){
+        fill(0, 0, 0, .2);
+        ellipse(a.x, a.y, 50, 50);
         println("Collision");
+        
         food.remove(i);
         addFood();
       }
+      
+      acc = collision || acc;
+      
     }
-    
-    acc = collision || acc;
+   
     
     return acc;
     

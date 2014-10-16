@@ -17,13 +17,10 @@ class Swarm {
     // Iterate through vehicles
     for (Vehicle fish : vehicles) {
       fish.fly(vehicles);
-      
-      // Hit detected.
-      if (food.collision(fish.location)) {
-        println("COLLISION");
+      if (food.collision(fish.location)){
         addToScore(1);
-      }
-     }
+      };
+    }
   }
 
   void addVehicle(Vehicle v) {
