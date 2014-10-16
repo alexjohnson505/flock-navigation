@@ -4,23 +4,24 @@
 // Code example from  IM 2250 Programming for Digital Media, Fall 2014
 class Swarm {
   ArrayList<Vehicle> vehicles;
-  color c; 
-
-  Swarm() {
-    vehicles = new ArrayList<Vehicle>();
-    c = color(140);  
-  }
+  color c;
+  int score; 
   
   Swarm(color c_) {
     vehicles = new ArrayList<Vehicle>();
-    c = c_;  
+    c = c_;
+    score = startFish;
   }
 
   void move() {
     // Iterate through vehicles
-    for (Vehicle v : vehicles) {
-      v.fly(vehicles);
-      if (v.collision()){
+    for (Vehicle fish : vehicles) {
+      fish.fly(vehicles);
+      
+      // Hit detected.
+      if (food.collision(fish.location)) {
+        println("COLLISION");
+        addToScore(1);
       }
      }
   }
@@ -37,6 +38,15 @@ class Swarm {
   
     Vehicle v = new Vehicle(initLocation, initAcceleration, c);
     addVehicle(v);
+  }
+  
+  color getColor(){
+    return c;
+  }
+  
+  int addToScore(int i){
+    score = score + i;
+    return score;
   }
 }
 

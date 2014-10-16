@@ -82,10 +82,6 @@ class Vehicle {
       endShape(CLOSE);
     popMatrix();
   }
-  
-  boolean collision(){
-    return food.collision(location); 
-  }
 
   // --------------------------------------------------------------------
   // Flock: Accumulate new acceleration based on: 

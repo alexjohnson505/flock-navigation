@@ -10,7 +10,8 @@ class Food {
   // Render each target
   void draw(){
     for (PVector v : food) {
-      fill(240, 0, 0);
+      fill(240, 240, 240);
+      stroke(2);
       ellipse(v.x, v.y, 10, 10);
      }
   }
@@ -18,7 +19,7 @@ class Food {
   // Add new target to list
   void addFood(){
     PVector f;
-    f = new PVector(random(0, 500), random(0, 1000));
+    f = new PVector(random(0, width), random(0, height));
     food.add(f);
   }
   
@@ -42,6 +43,7 @@ class Food {
       collision = (horizontalDifference < threshold) && (verticalDifference < threshold);
       
       if (collision){
+        println("Collision");
         food.remove(i);
         addFood();
       }

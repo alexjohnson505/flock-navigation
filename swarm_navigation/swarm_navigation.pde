@@ -2,47 +2,66 @@
 // Programming Exploration 5 v1 | Due 10/20/14
 
 final int margin = 40;
-final int initialCount = 20;
-
 PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
 color initColor =  color (0, 0, 0);
 
+int startSwarms = 5;
+int startFish   = 10;
+
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
-Food food = new Food();
+Food food;
 
 void setup() {
-  size(displayWidth / 3, displayHeight);
-
-  Swarm swarm1 = new Swarm(color(0));
-  Swarm swarm2 = new Swarm(color(250));
- 
-  swarms.add(swarm1);
-  swarms.add(swarm2);
   
-  // Start w/ 10 fish
-  for (int i = 10; i > 0; i--){
-    mouseClicked();
+  float width  = displayWidth / 3;
+  float height = displayHeight;
+  
+  size((int)width, (int)height);
+  
+  food = new Food();
+
+  // Init Swarms 
+  for (int i = startSwarms; i > 0; i--){
+    addSwarm();
+  } 
+  
+  // Init Start Fish
+  for (int i = startFish; i > 0; i--){
+    for (Swarm s : swarms) {
+      s.addFish();
+    }
+    
+    food.addFood();
   } 
 }
 
 void draw() {
-  background(160, 211, 224);
+  background(200, 241, 244);
+  
+  food.draw();
   
   // Update swarms
   for (Swarm s : swarms) {
     s.move();
   }
-
-  food.draw();
+  
+  drawHUD();
+  
 }
 
-void mouseClicked() {
-  
-  // Testing: Add fish to both 
-  for (Swarm s : swarms) {
-    s.addFish();
-  }
-  
-  food.addFood();
+void drawHUD() {
+   for (int i = swarms.size() - 1 ; i >= 0; i--){
+     Swarm s = swarms.get(i);
+     fill(s.getColor());
+     textSize(15);
+     text( "Swarm Score : " + s.score, 10, 20 * i + 30);
+   }
+}
+
+// Introduce New Swarm
+void addSwarm(){
+  color c = color(random(0, 255), random(0, 255), random(0, 255));
+  Swarm s = new Swarm(c);
+  swarms.add(s);
 }
