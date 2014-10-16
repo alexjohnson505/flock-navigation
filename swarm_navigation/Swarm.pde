@@ -5,24 +5,52 @@
 class Swarm {
   ArrayList<Vehicle> vehicles;
   color c;
-  int score; 
+  int score;
+  boolean selected;  
   
   Swarm(color c_) {
     vehicles = new ArrayList<Vehicle>();
     c = c_;
     score = startFish;
+    selected = false;
   }
 
   void move() {
     // Iterate through vehicles
     for (Vehicle fish : vehicles) {
       fish.fly(vehicles);
+      
       if (food.collision(fish.location)){
         addToScore(1);
       };
     }
+    
+    if (selected){
+      drawActiveMesh();    
+    }
   }
 
+  void drawAverageMesh(){
+    float sumX = 0;
+    float sumY = 0;
+    
+    for (Vehicle fish : vehicles) {
+      sumX += fish.location.x;
+      sumY += fish.location.y;
+    }
+    
+    float avgX = sumX / vehicles.size();
+    float avgY = sumY / vehicles.size();
+    
+    for (Vehicle fish : vehicles) {
+      stroke(2);
+      line(avgX, avgY, fish.location.x, fish.location.y);
+    }   
+  }
+  
+ 
+   
+   
   void addVehicle(Vehicle v) {
     vehicles.add(v);
   }

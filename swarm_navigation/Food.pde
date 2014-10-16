@@ -44,8 +44,8 @@ class Food {
       
       if (collision){
         fill(0, 0, 0, .2);
+        stroke(2);
         ellipse(a.x, a.y, 50, 50);
-        println("Collision");
         
         food.remove(i);
         addFood();

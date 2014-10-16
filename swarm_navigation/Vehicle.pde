@@ -70,8 +70,8 @@ class Vehicle {
   void display() {
     float theta = velocity.heading2D() + radians(90);
     fill(myColor);
-    stroke(0);
-    strokeWeight(1);
+    noStroke();
+
     pushMatrix();
       translate(location.x, location.y);
       rotate(theta);
