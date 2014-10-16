@@ -6,8 +6,8 @@ PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
 color initColor =  color (0, 0, 0);
 
-int startSwarms = 6;
-int startFish   = 10;
+int startSwarms = 5;
+int startFish   = 30;
 
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
 Food food;
@@ -100,6 +100,19 @@ void keyPressed(){
   }
   if (key == 'w'){
     changeSelected(-1);
+  }
+  
+  if (key == 'd'){
+     int i = selectedSwarmIndex();
+     Swarm s = swarms.get(i);
+     
+     if (s.score > 49){
+       s.score += -50;
+       s.addFish();
+       s.addFish();
+       s.addFish();
+     }
+
   }
 }
 

@@ -40,9 +40,6 @@ class Swarm {
       
       boolean tooFar = diffX > 200 || diffY > 200;
       
-      
-      println(diffX + " " + diffY + " " + tooFar);
-      
       // Draw a rough mesh between selected nodes
       if (prevX != 0 || prevY != 0) {
         if (!tooFar){
