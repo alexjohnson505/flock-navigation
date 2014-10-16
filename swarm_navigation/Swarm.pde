@@ -29,28 +29,33 @@ class Swarm {
       drawActiveMesh();    
     }
   }
-
-  void drawAverageMesh(){
-    float sumX = 0;
-    float sumY = 0;
+  
+  void drawActiveMesh(){
+    float prevX = 0;
+    float prevY = 0;
     
     for (Vehicle fish : vehicles) {
-      sumX += fish.location.x;
-      sumY += fish.location.y;
+      float diffX = abs(prevX - fish.location.x);
+      float diffY = abs(prevY - fish.location.y);
+      
+      boolean tooFar = diffX > 200 || diffY > 200;
+      
+      
+      println(diffX + " " + diffY + " " + tooFar);
+      
+      // Draw a rough mesh between selected nodes
+      if (prevX != 0 || prevY != 0) {
+        if (!tooFar){
+          stroke(204, 102, 0);
+          line(prevX, prevY, fish.location.x, fish.location.y);
+        }
+      }
+      
+      prevX = fish.location.x;
+      prevY = fish.location.y;
     }
-    
-    float avgX = sumX / vehicles.size();
-    float avgY = sumY / vehicles.size();
-    
-    for (Vehicle fish : vehicles) {
-      stroke(2);
-      line(avgX, avgY, fish.location.x, fish.location.y);
-    }   
   }
   
- 
-   
-   
   void addVehicle(Vehicle v) {
     vehicles.add(v);
   }
