@@ -17,7 +17,7 @@ class Vehicle {
   
   float r = 6;             // our size in terms of radius
   float maxForce = 0.03;   // maximum steering force
-  float maxSpeed = 2.5;    // maximum speed
+  float maxSpeed = 1.5;    // maximum speed
 
   float damping = 100; // arrival damping in pixels
   float neighborDistance = 50; // cohesion variables

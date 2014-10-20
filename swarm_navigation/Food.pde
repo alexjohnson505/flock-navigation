@@ -11,8 +11,8 @@ class Food {
   void draw(){
     for (PVector v : food) {
       fill(240, 240, 240);
-      stroke(2);
-      ellipse(v.x, v.y, 10, 10);
+      noStroke();
+      ellipse(v.x, v.y, 5, 5);
      }
   }
   
@@ -29,7 +29,7 @@ class Food {
   
   // Does a (the fish's location) collide with b (a food item)
   boolean collision(PVector a){
-    float threshold = 8.5;
+    float threshold = 5.5;
     boolean acc = false;
     
     
@@ -43,16 +43,15 @@ class Food {
       boolean collision = (horizontalDifference < threshold) && (verticalDifference < threshold);
       
       if (collision){
-        fill(0, 0, 0, .2);
-        stroke(2);
-        ellipse(a.x, a.y, 50, 50);
+        // fill(0, 0, 0, .2);
+        // noStroke();
+        // ellipse(a.x, a.y, 50, 50);
         
         food.remove(i);
         addFood();
       }
       
       acc = collision || acc;
-      
     }
    
     

@@ -7,7 +7,7 @@ PVector initAcceleration = new PVector(0, 0);
 color initColor =  color (0, 0, 0);
 
 int startSwarms = 4;
-int startFish   = 150;
+int startFish   = 50;
 
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
 Food food;
@@ -37,7 +37,7 @@ void setup() {
 }
 
 void draw() {
-  background(200, 241, 244);
+  background(0,0,0);
 
   food.draw();
 
@@ -60,7 +60,6 @@ void drawHUD() {
     // Get current swarm
     Swarm s = swarms.get(i);
     textSize(15);
-
     
     int y = 25 * i + 30; // vertical offset
     int x = 20;           // horiontal offset
@@ -73,7 +72,7 @@ void drawHUD() {
       rect(0, -10, 20, 10);
   
       // Text
-      fill(0);    
+      fill(240);    
       text("Swarm Score : " + s.score, 30, 0);
   
       if (s.selected) {
@@ -89,9 +88,19 @@ void drawHUD() {
 
 // Introduce New Swarm
 void addSwarm() {
-  color c = color(random(0, 255), random(0, 255), random(0, 255));
-  Swarm s = new Swarm(c);
-  swarms.add(s);
+  float r = random(0, 255);
+  float g = random(0, 255);
+  float b = random(0, 255);
+  
+  // Ensure NEON colors
+  // (Prevents Dark colors
+  if (r + g + b < 450){
+    addSwarm();
+  } else {
+    color c = color(r,g,b);
+    Swarm s = new Swarm(c);
+    swarms.add(s);
+  }
 }
 
 void keyPressed(){
