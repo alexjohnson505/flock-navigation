@@ -6,8 +6,8 @@ PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
 color initColor =  color (0, 0, 0);
 
-int startSwarms = 5;
-int startFish   = 30;
+int startSwarms = 4;
+int startFish   = 150;
 
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
 Food food;
