@@ -16,21 +16,30 @@ class Swarm {
   }
 
   void move() {
+    ArrayList<Vehicle> reproducingFish = new ArrayList<Vehicle>();
     
- 
-    // Iterate through vehicles
-    for (Vehicle fish : vehicles) {
-      fish.fly(vehicles);
-      
-      if (food.collision(fish.location)){
-        // addFish(fish.location.x, fish.location.y);
-        addToScore(1);
+    Iterator<Vehicle> iterator = vehicles.iterator();
+
+    while (iterator.hasNext()) {
+       Vehicle fish = iterator.next();
+       
+       fish.fly(vehicles);
+       
+       if (food.collision(fish.location)){
+         reproducingFish.add(fish);
+         addToScore(1);
       };
     }
-    
+
     if (selected){
       drawActiveMesh();    
     }
+    
+    while(reproducingFish.size() > 0){
+       Vehicle parent = reproducingFish.remove(0);
+       addFish(parent.location.x, parent.location.y); 
+    }
+    
   }
   
   void drawActiveMesh(){
