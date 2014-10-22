@@ -27,6 +27,7 @@ class Swarm {
        fish.fly(vehicles);
        
        if (food.collision(fish.location)){
+         fish.feed();
          reproducingFish.add(fish);
          addToScore(1);
       };

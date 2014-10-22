@@ -15,6 +15,8 @@ class Vehicle {
 
   color myColor;
   
+  float dangerLevel = 255;   // Current Danger, from 0.0 (dead) to 255.0 (safe)
+  
   float r = 6;             // our size in terms of radius
   float maxForce = 0.03;   // maximum steering force
   float maxSpeed = 1.5;    // maximum speed
@@ -69,7 +71,10 @@ class Vehicle {
   // Display: Render our 'fish'
   void display() {
     float theta = velocity.heading2D() + radians(90);
-    fill(myColor);
+    
+    dangerLevel = dangerLevel - decayRate;
+   
+    fill(myColor, dangerLevel);
     noStroke();
 
     pushMatrix();
@@ -94,9 +99,9 @@ class Vehicle {
   
   void flock(ArrayList < Vehicle > vehicles) {
     
-    PVector separationForce = separation(vehicles); // 1.) Seperation
-    PVector alignmentForce = alignment(vehicles);   // 2.) Alighment
-    PVector cohesionForce = cohesion(vehicles);     // 3.) Cohesion
+    PVector separationForce = separation(vehicles); //  1.) Seperation
+    PVector alignmentForce = alignment(vehicles);   //  2.) Alighment
+    PVector cohesionForce = cohesion(vehicles);     //  3.) Cohesion
     
     // arbitrarily weight these forces
     separationForce.mult(separationWeight);
@@ -232,9 +237,9 @@ class Vehicle {
     return steer;
   }
 
-  // Seperate: Check nearby vehicles. Apply force to steer away  
+  // Seperate: Check nearby vehicles. Apply force to steer away
   void separate(ArrayList < Vehicle > vehicles) {
-    float desiredseparation = r * 2;
+    float desiredseparation = r * 1.5;
     PVector sum = new PVector();
     int count = 0;
     
@@ -253,12 +258,15 @@ class Vehicle {
         count++; // Keep track of how many
       }
     }
+    
     // average -- divide by how many
     if (count > 0) {
       sum.div(count);
+      
       // Our desired vector is the average scaled to maximum speed
       sum.normalize();
       sum.mult(maxSpeed);
+      
       // implement Reynolds: steering = desired - velocity
       PVector steer = PVector.sub(sum, velocity);
       steer.limit(maxForce);
@@ -367,5 +375,10 @@ class Vehicle {
     ellipse(target.x, target.y, 4, 4);
     line(location.x, location.y, circle.x, circle.y);
     line(circle.x, circle.y, target.x, target.y);
+  }
+  
+  // Fish eats. Reset danger
+  void feed(){
+    dangerLevel = 255;
   }
 }

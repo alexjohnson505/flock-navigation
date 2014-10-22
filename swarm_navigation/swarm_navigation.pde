@@ -8,12 +8,16 @@ PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
 
 int startSwarms = 3;
-int startFish   = 20;
+int startFish   = 100;
 
 // Limit rate of food regeneration
 // 100 = 100 game ticks per new food;
 int foodRegenCounter = 0;
-int foodRegenThreshold = 100;
+int foodRegenThreshold = 50;
+
+// Fish decy (starve). Amount of opacity (0-255) 
+// lost per tick of not eating
+float decayRate = 0.05;
 
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
 Food food;
