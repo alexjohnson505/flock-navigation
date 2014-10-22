@@ -33,7 +33,7 @@ class Swarm {
     }
 
     if (selected){
-      drawActiveMesh();    
+      // drawActiveMesh();    
     }
     
     while(reproducingFish.size() > 0){

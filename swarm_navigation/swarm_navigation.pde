@@ -89,6 +89,7 @@ void drawHUD() {
       if (s.selected) {
         noFill();
         stroke(2);
+        stroke(240, 240, 240);
         rect(-5, -16, 175, 22);
       }
      
