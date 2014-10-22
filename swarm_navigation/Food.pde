@@ -48,7 +48,6 @@ class Food {
         // ellipse(a.x, a.y, 50, 50);
         
         food.remove(i);
-        addFood();
       }
       
       acc = collision || acc;

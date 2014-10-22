@@ -6,10 +6,14 @@ import java.util.Iterator;
 final int margin = 40;
 PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
-color initColor =  color (0, 0, 0);
 
 int startSwarms = 3;
 int startFish   = 20;
+
+// Limit rate of food regeneration
+// 100 = 100 game ticks per new food;
+int foodRegenCounter = 0;
+int foodRegenThreshold = 100;
 
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
 Food food;
@@ -25,7 +29,8 @@ void setup() {
 
   // Init Swarms 
   for (int i = startSwarms; i > 0; i--) {
-    addSwarm();
+    Swarm s = new Swarm();
+    swarms.add(s);
   } 
 
   // Init Start Fish
@@ -33,7 +38,8 @@ void setup() {
     for (Swarm s : swarms) {
       s.addFish(displayWidth / 4, displayHeight / 4);
     }
-
+  
+    // Init a food for every starting fish in a swarm
     food.addFood();
   }
 }
@@ -49,6 +55,8 @@ void draw() {
   }
 
   drawHUD();
+  
+  updateFoodQuantity();
 }
 
 void mouseClicked(){
@@ -89,10 +97,17 @@ void drawHUD() {
   }
 }
 
-// Introduce New Swarm
-void addSwarm() {
-    Swarm s = new Swarm();
-    swarms.add(s);
+// Limit rate of food respawn.
+// foodRegenCounter is updated every TICK.
+// when foodRegenCounter exceeds foodRegenThreshold,
+// we can introduce a new food item into the world.
+void updateFoodQuantity(){
+  foodRegenCounter++;
+  
+  if (foodRegenCounter > foodRegenThreshold) {
+    foodRegenCounter = 0;
+    food.addFood();
+  }
 }
 
 void keyPressed(){
