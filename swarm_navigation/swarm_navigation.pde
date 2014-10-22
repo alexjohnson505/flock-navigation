@@ -9,7 +9,7 @@ PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
 
 int startSwarms = 3;
-int startFish   = 100;
+int startFish   = 20;
 
 // Limit rate of food regeneration
 // 100 = 100 game ticks per new food;
@@ -60,18 +60,20 @@ void setup() {
 
 void draw() {
   background(0,0,0);
-  
-  // image(ripple, 0, 0, 256/2, 256/2);
 
+  for (Ripple r : ripples){
+    r.draw();
+    
+    if (r.currentFrame > 9) {
+      // r.delete();
+    }
+  }
+  
   food.draw();
 
   // Update swarms
   for (Swarm s : swarms) {
     s.move();
-  }
-  
-  for (Ripple r : ripples){
-    r.draw();
   }
 
   drawHUD();

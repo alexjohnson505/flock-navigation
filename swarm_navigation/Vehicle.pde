@@ -72,7 +72,7 @@ class Vehicle {
   void display() {
     float theta = velocity.heading2D() + radians(90);
     
-    dangerLevel = dangerLevel - decayRate;
+    // dangerLevel = dangerLevel - decayRate;
    
     fill(myColor, dangerLevel);
     noStroke();

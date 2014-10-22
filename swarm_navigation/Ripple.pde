@@ -1,29 +1,34 @@
 // A Ripple for UI effects
 class Ripple {
   int currentFrame = 0;
-  int framesPerSlide = 4;
-  PImage[] frames = rippleImages;
+  int maxFrame = 50;
+  color c;
   float x;
   float y;
   
-  Ripple(float x_, float y_){
+  Ripple(float x_, float y_, color c_){
     x = x_;
     y = y_;
+    c = c_;
   }
   
   void draw(){
-    if (currentFrame < 30){
-      int i = (int)Math.floor(currentFrame / framesPerSlide);
+    float alpha = 250 - (250 * ((float)currentFrame / (float)maxFrame));
+   
+    if (currentFrame < maxFrame){
       pushMatrix();
-        tint(240, 240, 240, 100); // Transparency
-        image(frames[i], x, y, 256/2, 256/2);
+        strokeWeight(2);
+        stroke(c, alpha);
+        noFill();
+        
+        ellipse(x, y, currentFrame, currentFrame);
+        ellipse(x, y, currentFrame / 2, currentFrame / 2);
+        ellipse(x, y, currentFrame / 3, currentFrame / 3);
       popMatrix();
+      
+      currentFrame++;
     }
-    currentFrame++;
-    
-    
-  }
-  
+  }  
 }
 
 
