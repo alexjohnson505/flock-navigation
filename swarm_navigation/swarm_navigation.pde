@@ -2,6 +2,7 @@
 // Programming Exploration 5 v1 | Due 10/20/14
 
 import java.util.Iterator;
+import java.lang.Math;
 
 final int margin = 40;
 PVector initLocation = new PVector(0, 0);
@@ -22,13 +23,17 @@ float decayRate = 0.05;
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
 Food food;
 
+// Load ripple effect frames into memory
+PImage[] rippleImages = new PImage[10];
+ArrayList<Ripple> ripples = new ArrayList<Ripple>();
+
 void setup() {
 
   float width  = displayWidth / 3;
   float height = displayHeight;
 
   size((int)width, (int)height);
-
+  
   food = new Food();
 
   // Init Swarms 
@@ -46,16 +51,27 @@ void setup() {
     // Init a food for every starting fish in a swarm
     food.addFood();
   }
+  
+  // Load animation frames
+  for (int i = 9; i > -1; i--){
+    rippleImages[i] = loadImage("data/ripple/ripple-" + i + ".gif");
+  }
 }
 
 void draw() {
   background(0,0,0);
+  
+  // image(ripple, 0, 0, 256/2, 256/2);
 
   food.draw();
 
   // Update swarms
   for (Swarm s : swarms) {
     s.move();
+  }
+  
+  for (Ripple r : ripples){
+    r.draw();
   }
 
   drawHUD();

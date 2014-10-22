@@ -47,7 +47,12 @@ class Food {
         // noStroke();
         // ellipse(a.x, a.y, 50, 50);
         
+        // Remove eaten food
         food.remove(i);
+        
+        // Add ripple at each eaten food
+        Ripple r = new Ripple(b.x, b.y);
+        ripples.add(r);
       }
       
       acc = collision || acc;
