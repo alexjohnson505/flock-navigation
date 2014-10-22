@@ -175,7 +175,8 @@ void removeOldFish(){
     // Iterate through fish
     for (int j = fish.vehicles.size() - 1; j >= 0; j--){
       Vehicle f = fish.vehicles.get(j);
-      if (f.dangerLevel < 0.01){
+      if (f.dangerLevel < 0.1){
+        ripples.add(new Ripple(f.location.x, f.location.y, color(255, 255, 150)));
         fish.vehicles.remove(j);
       }
     }
