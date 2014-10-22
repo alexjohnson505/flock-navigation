@@ -35,9 +35,9 @@ class Ripple {
         } 
        
       popMatrix();
-      
-      currentFrame++;
     }
+    
+    currentFrame++;
   }  
 }
 

@@ -1,5 +1,5 @@
 // Alex Johnson - IM 2250 - Programming for Digital Media
-// Programming Exploration 5 v1 | Due 10/20/14
+// Programming Exploration 5 v2 | Due 10/27/14
 
 import java.util.Iterator;
 import java.lang.Math;
@@ -8,8 +8,14 @@ final int margin = 40;
 PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
 
+// Init Object Count
 int startSwarms = 3;
 int startFish   = 20;
+
+// Init Objects
+ArrayList<Ripple> ripples = new ArrayList<Ripple>();
+ArrayList<Swarm> swarms = new ArrayList<Swarm>();
+Food food;
 
 // Limit rate of food regeneration
 // 100 = 100 game ticks per new food;
@@ -18,11 +24,7 @@ int foodRegenThreshold = 50;
 
 // Fish decy (starve). Amount of opacity (0-255) 
 // lost per tick of not eating
-float decayRate = 0.05;
-
-ArrayList<Ripple> ripples = new ArrayList<Ripple>();
-ArrayList<Swarm> swarms = new ArrayList<Swarm>();
-Food food;
+float decayRate = 0.1;
 
 void setup() {
 
@@ -52,25 +54,14 @@ void setup() {
 
 void draw() {
   background(0,0,0);
-
-  for (Ripple r : ripples){
-    r.draw();
-    
-    if (r.currentFrame > 9) {
-      // r.delete();
-    }
-  }
   
-  food.draw();
-
-  // Update swarms
-  for (Swarm s : swarms) {
-    s.move();
-  }
-
-  drawHUD();
+  for (Ripple r : ripples){ r.draw(); } // Draw Ripples
+  for (Swarm s : swarms) { s.move(); }  // Draw Swarms
+  food.draw(); // Draw Food
+  drawHUD();   // Draw HUD
   
-  updateFoodQuantity();
+  removeOldRipples();
+  removeOldFish();
 }
 
 void mouseClicked(){
@@ -88,7 +79,6 @@ void drawHUD() {
     int y = 25 * i + 30; // vertical offset
     int x = 20;           // horiontal offset
 
-
     pushMatrix();
       translate(x, y);
   
@@ -98,30 +88,17 @@ void drawHUD() {
   
       // Text
       fill(240);    
-      text("Swarm Score : " + s.score, 30, 0);
+      text("Swarm Score : " + s.score + " Points | " + s.vehicles.size() + " Fish", 30, 0);
   
       if (s.selected) {
         noFill();
         stroke(2);
         stroke(240, 240, 240);
-        rect(-5, -16, 175, 22);
+        rect(-5, -16, 29, 22);
       }
      
     popMatrix();
     noStroke();
-  }
-}
-
-// Limit rate of food respawn.
-// foodRegenCounter is updated every TICK.
-// when foodRegenCounter exceeds foodRegenThreshold,
-// we can introduce a new food item into the world.
-void updateFoodQuantity(){
-  foodRegenCounter++;
-  
-  if (foodRegenCounter > foodRegenThreshold) {
-    foodRegenCounter = 0;
-    food.addFood();
   }
 }
 
@@ -177,6 +154,34 @@ int selectedSwarmIndex(){
   
   return acc;
 }
+
+// Garbage collect expired ripples
+void removeOldRipples(){
+  for (int i = ripples.size() - 1; i >= 0; i--){
+    Ripple r = ripples.get(i);
+    if (r.currentFrame > 50){
+      ripples.remove(i);
+    }
+    
+  }
+}
+
+// Garbage collect dead fish
+void removeOldFish(){
+  // Iterate through Swarms
+  for (int i = swarms.size() - 1; i >= 0; i--) {
+    Swarm fish = swarms.get(i);
+    
+    // Iterate through fish
+    for (int j = fish.vehicles.size() - 1; j >= 0; j--){
+      Vehicle f = fish.vehicles.get(j);
+      if (f.dangerLevel < 0.01){
+        fish.vehicles.remove(j);
+      }
+    }
+  }
+}
+
 
 
 

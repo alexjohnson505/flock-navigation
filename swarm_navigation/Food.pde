@@ -13,7 +13,22 @@ class Food {
       fill(240, 240, 240);
       noStroke();
       ellipse(v.x, v.y, 5, 5);
-     }
+    }
+     
+     updateFoodQuantity();
+  }
+  
+  // Limit rate of food respawn.
+  // foodRegenCounter is updated every TICK.
+  // when foodRegenCounter exceeds foodRegenThreshold,
+  // we can introduce a new food item into the world.
+  void updateFoodQuantity(){
+    foodRegenCounter++;
+  
+    if (foodRegenCounter > foodRegenThreshold) {
+      foodRegenCounter = 0;
+      addFood();
+    }
   }
   
   // Add new target to list
