@@ -19,8 +19,12 @@ class Food {
   // Add new target to list
   void addFood(){
     PVector f;
-    f = new PVector(random(0, width), random(0, height));
-    food.add(f);
+
+    float x = random(0, width);
+    float y = random(0, height);
+    
+    food.add(new PVector(x, y));
+    ripples.add(new Ripple(x, y, color(255)));
   }
   
   void remove(int index){

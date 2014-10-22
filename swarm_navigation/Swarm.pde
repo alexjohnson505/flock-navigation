@@ -28,8 +28,7 @@ class Swarm {
        
        if (food.collision(fish.location)){
            // Add ripple at each eaten food
-          Ripple r = new Ripple(fish.location.x, fish.location.y, fish.myColor);
-          ripples.add(r);
+          ripples.add(new Ripple(fish.location.x, fish.location.y, fish.myColor));
         
          fish.feed();
          reproducingFish.add(fish);

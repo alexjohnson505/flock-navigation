@@ -20,12 +20,9 @@ int foodRegenThreshold = 50;
 // lost per tick of not eating
 float decayRate = 0.05;
 
+ArrayList<Ripple> ripples = new ArrayList<Ripple>();
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
 Food food;
-
-// Load ripple effect frames into memory
-PImage[] rippleImages = new PImage[10];
-ArrayList<Ripple> ripples = new ArrayList<Ripple>();
 
 void setup() {
 
@@ -50,11 +47,6 @@ void setup() {
   
     // Init a food for every starting fish in a swarm
     food.addFood();
-  }
-  
-  // Load animation frames
-  for (int i = 9; i > -1; i--){
-    rippleImages[i] = loadImage("data/ripple/ripple-" + i + ".gif");
   }
 }
 
