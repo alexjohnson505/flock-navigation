@@ -20,7 +20,7 @@ Food food;
 // Limit rate of food regeneration
 // 100 = 100 game ticks per new food;
 int foodRegenCounter = 0;
-int foodRegenThreshold = 50;
+int foodRegenThreshold = 20;
 
 // Fish decy (starve). Amount of opacity (0-255) 
 // lost per tick of not eating
@@ -65,7 +65,7 @@ void draw() {
 }
 
 void mouseClicked(){
-  println(mouseX + " " + mouseY);
+  food.addFood(mouseX, mouseY);
 }
 
 void drawHUD() {
@@ -182,7 +182,5 @@ void removeOldFish(){
     }
   }
 }
-
-
 
 

@@ -33,11 +33,15 @@ class Food {
   
   // Add new target to list
   void addFood(){
-    PVector f;
-
     float x = random(0, width);
     float y = random(0, height);
     
+    food.add(new PVector(x, y));
+    ripples.add(new Ripple(x, y, color(255)));
+  }
+
+  // Add new target to list
+  void addFood(float x, float y){
     food.add(new PVector(x, y));
     ripples.add(new Ripple(x, y, color(255)));
   }
