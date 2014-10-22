@@ -1,13 +1,15 @@
 // Alex Johnson - IM 2250 - Programming for Digital Media
 // Programming Exploration 5 v1 | Due 10/20/14
 
+import java.util.Iterator;
+
 final int margin = 40;
 PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
 color initColor =  color (0, 0, 0);
 
-int startSwarms = 4;
-int startFish   = 50;
+int startSwarms = 3;
+int startFish   = 20;
 
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
 Food food;
@@ -29,7 +31,7 @@ void setup() {
   // Init Start Fish
   for (int i = startFish; i > 0; i--) {
     for (Swarm s : swarms) {
-      s.addFish();
+      s.addFish(displayWidth / 4, displayHeight / 4);
     }
 
     food.addFood();
@@ -64,6 +66,7 @@ void drawHUD() {
     int y = 25 * i + 30; // vertical offset
     int x = 20;           // horiontal offset
 
+
     pushMatrix();
       translate(x, y);
   
@@ -92,8 +95,7 @@ void addSwarm() {
   float g = random(0, 255);
   float b = random(0, 255);
   
-  // Ensure NEON colors
-  // (Prevents Dark colors
+  // Limit color choice to NEONs
   if (r + g + b < 450){
     addSwarm();
   } else {
@@ -117,9 +119,7 @@ void keyPressed(){
      
      if (s.score > 49){
        s.score += -50;
-       s.addFish();
-       s.addFish();
-       s.addFish();
+       s.addFish(displayWidth / 4, displayHeight / 4);
      }
 
   }

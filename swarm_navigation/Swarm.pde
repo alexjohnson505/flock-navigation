@@ -16,11 +16,14 @@ class Swarm {
   }
 
   void move() {
+    
+ 
     // Iterate through vehicles
     for (Vehicle fish : vehicles) {
       fish.fly(vehicles);
       
       if (food.collision(fish.location)){
+        // addFish(fish.location.x, fish.location.y);
         addToScore(1);
       };
     }
@@ -56,10 +59,10 @@ class Swarm {
   void addVehicle(Vehicle v) {
     vehicles.add(v);
   }
-  
-  void addFish(){
-    initLocation.x = displayWidth / 4;
-    initLocation.y = displayHeight / 4;
+
+  void addFish(float x, float y){
+    initLocation.x = x;
+    initLocation.y = y;
     initAcceleration.x = random(-0.7, 0.7);
     initAcceleration.y = random(-0.7, 0.7);
   
