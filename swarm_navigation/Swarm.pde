@@ -1,16 +1,17 @@
 
+// Original code example from  IM 2250 Programming for Digital Media, Fall 2014
 // a Swarm represents a collection of fish. Parameters:
 // - (ArrayList) vehicles: arrayList of fish in the swarm
-// Code example from  IM 2250 Programming for Digital Media, Fall 2014
+
 class Swarm {
   ArrayList<Vehicle> vehicles;
   color c;
   int score;
   boolean selected;  
   
-  Swarm(color c_) {
+  Swarm() {
     vehicles = new ArrayList<Vehicle>();
-    c = c_;
+    c = makeNeonColor();
     score = startFish;
     selected = false;
   }
@@ -40,6 +41,25 @@ class Swarm {
        addFish(parent.location.x, parent.location.y); 
     }
     
+  }
+  
+  // Generate a random neon color
+  color makeNeonColor(){
+    float r = random(0, 255);
+    float g = random(0, 255);
+    float b = random(0, 255);
+  
+    // Limit color choice to NEONs
+    if (r + g + b < 450){
+      
+      // Recursively call function to create new color option
+      return makeNeonColor();
+    } else {
+      
+      // Return color
+      color c = color(r,g,b);
+      return c;
+    }
   }
   
   void drawActiveMesh(){

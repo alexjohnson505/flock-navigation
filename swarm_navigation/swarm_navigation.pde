@@ -91,18 +91,8 @@ void drawHUD() {
 
 // Introduce New Swarm
 void addSwarm() {
-  float r = random(0, 255);
-  float g = random(0, 255);
-  float b = random(0, 255);
-  
-  // Limit color choice to NEONs
-  if (r + g + b < 450){
-    addSwarm();
-  } else {
-    color c = color(r,g,b);
-    Swarm s = new Swarm(c);
+    Swarm s = new Swarm();
     swarms.add(s);
-  }
 }
 
 void keyPressed(){
