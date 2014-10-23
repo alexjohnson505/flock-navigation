@@ -1,10 +1,40 @@
 // Alex Johnson - IM 2250 - Programming for Digital Media
 // Programming Exploration 5 v2 | Due 10/27/14
 
+/*******************************
+     USER INTERACTION
+ *******************************/
+// Swarms navigate the environment. When a fish
+// collects a food, they reproduce, and their health
+// is refreshed. When a fish goes too long without
+// eating, they will fade away and die (yellow ripple).
+
+// Click on the screen to place a new food item
+// at the center of your cursor.
+
+// Press 'W' & 'S' to change the currently selected
+// swarm. Notice how a white box is drawn around their
+// color in the top left of the screen.
+
+// Press 'D' to grant extra fish to the currently
+// selected swarm.
+ 
+// Updated features include:
+// Ripples for Fish Spawn
+// Ripples for Food spawn
+// Ripples for Fish Death
+// Constant Rate of food spawn
+// Opacities for starving fish
+// Re-names objects to be more appropriate
+// Refactored code
+// Users can now manually drop food
+// Display fish count in GUI
+
 import java.util.Iterator;
 import java.lang.Math;
 
 final int margin = 40;
+
 PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
 
@@ -17,16 +47,17 @@ Food food;
      EDITABLE PARAMETERS
  *******************************/
 
-int startSwarms = 3;   // Swarms at frame 0
-int startFish   = 20;  // Fish per each swarm
+int startSwarms = 3;   // Starting Swarms
+int startFish   = 20;  // Initial fish per swarm
 
 // Limit rate of food regeneration
-// 100 = 100 game ticks per new food;
+// (default) 20 game ticks per new food;
 int foodRegenCounter = 0;
 int foodRegenThreshold = 20;
 
-// Fish decy (starve). Amount of opacity (0-255) 
-// lost per tick of not eating
+// Fish decay (starve) over time.
+// decayRate represents damage per
+// tick of not eating. 
 float decayRate = 0.1;
 
 void setup() {
@@ -60,18 +91,22 @@ void draw() {
   
   for (Ripple r : ripples){ r.draw(); } // Draw Ripples
   for (Swarm s : swarms) { s.move(); }  // Draw Swarms
+  
   food.draw(); // Draw Food
   drawHUD();   // Draw HUD
   
-  removeOldRipples();
-  removeOldFish();
+  removeOldRipples(); // Garbage Collect
+  removeOldFish();    // Garbage Collect
 }
 
 void mouseClicked(){
   food.addFood(mouseX, mouseY);
 }
 
+// Create informational GUI for user.
+// Display stats on current swarms
 void drawHUD() {
+  
   // Draw stats for each swarm
   for (int i = swarms.size () - 1; i >= 0; i--) {
     
@@ -79,7 +114,7 @@ void drawHUD() {
     Swarm s = swarms.get(i);
     textSize(15);
     
-    int y = 25 * i + 30; // vertical offset
+    int y = 25 * i + 30;  // vertical offset
     int x = 20;           // horiontal offset
 
     pushMatrix();
@@ -91,8 +126,14 @@ void drawHUD() {
   
       // Text
       fill(240);    
-      text("Swarm Score : " + s.score + " Points | " + s.fishs.size() + " Fish", 30, 0);
+      
+      // More info:
+      // text("Swarm Score : " + s.score + " Points | " + s.fishs.size() + " Fish", 30, 0);
+      
+      // Basic info: fish count
+      text(s.fishs.size(), 30, 0);
   
+      // Display indicator for currently selected swarm 
       if (s.selected) {
         noFill();
         stroke(2);
@@ -117,11 +158,11 @@ void keyPressed(){
      int i = selectedSwarmIndex();
      Swarm s = swarms.get(i);
      
-     if (s.score > 49){
-       s.score += -50;
-       s.addFish(displayWidth / 4, displayHeight / 4);
-     }
-
+     s.score += -10;
+     int x = displayWidth / 4;
+     int y = displayHeight / 4;
+     s.addFish(x, y);
+     ripples.add(new Ripple(x, y, s.c));
   }
 }
 
@@ -178,7 +219,7 @@ void removeOldFish(){
     // Iterate through fish
     for (int j = fish.fishs.size() - 1; j >= 0; j--){
       Fish f = fish.fishs.get(j);
-      if (f.dangerLevel < 0.1){
+      if (f.dangerLevel < 0.2){
         ripples.add(new Ripple(f.location.x, f.location.y, color(255, 255, 150)));
         fish.fishs.remove(j);
       }

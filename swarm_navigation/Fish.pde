@@ -1,4 +1,7 @@
-
+// Fish represents a single member of a swarm.
+// Fish calculates it's location, direction, and
+// acceleration based on surrounding members of 
+// the same swarm.
 class Fish {
 
   /***************************
@@ -14,14 +17,14 @@ class Fish {
    ***************************/
 
   color myColor;
-  
-  float dangerLevel = 255;   // Current Danger, from 0.0 (dead) to 255.0 (safe)
+   
+  float dangerLevel = 255; // Current Danger, from 0.0 (dead) to 255.0 (safe)  
   
   float r = 6;             // our size in terms of radius
   float maxForce = 0.03;   // maximum steering force
   float maxSpeed = 1.5;    // maximum speed
 
-  float damping = 100; // arrival damping in pixels
+  float damping = 100;         // arrival damping in pixels
   float neighborDistance = 50; // cohesion variables
 
   /***************************
@@ -377,7 +380,8 @@ class Fish {
     line(circle.x, circle.y, target.x, target.y);
   }
   
-  // Fish eats. Reset danger
+  // Fish eats. It's now full, and we can 
+  // reset it's danger level
   void feed(){
     dangerLevel = 255;
   }

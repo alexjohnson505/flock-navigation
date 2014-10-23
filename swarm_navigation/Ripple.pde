@@ -1,4 +1,11 @@
-// A Ripple for UI effects
+// Ripple is a UI effect.
+// Creates 3 circles that radiate outwards from
+// a central location. Ripples are stored in an
+// ArrayList, as to support multiple Ripples
+// occuring at a single time. Ripples also maintain
+// a frame count, used to calculate the current step
+// in the animation.
+
 class Ripple {
   int currentFrame = 0; // Stores state of animation
   int maxFrame = 50;    // How many frames in animation?

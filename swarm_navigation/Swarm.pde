@@ -1,10 +1,11 @@
 
+// Swarm represents a grouping of fish. 
 // Original code example from  IM 2250 Programming for Digital Media, Fall 2014
-// a Swarm represents a collection of fish. Parameters:
-// - (ArrayList) fishs: arrayList of fish in the swarm
-
 class Swarm {
-  ArrayList<Fish> fishs;
+  
+  // Yes, I am aware "fishs" is grammatically 
+  // incorrect, yet it avoids a LOT of confusion.
+  ArrayList<Fish> fishs; 
   color c;
   int score;
   boolean selected;  
@@ -21,14 +22,16 @@ class Swarm {
     
     Iterator<Fish> iterator = fishs.iterator();
 
+    // TODO: Research performance increase for using iterator
     while (iterator.hasNext()) {
        Fish fish = iterator.next();
        
        fish.fly(fishs);
        
        if (food.collision(fish.location)){
-           // Add ripple at each eaten food
-          ripples.add(new Ripple(fish.location.x, fish.location.y, fish.myColor));
+         
+         // Add ripple at each eaten food
+         ripples.add(new Ripple(fish.location.x, fish.location.y, fish.myColor));
         
          fish.feed();
          reproducingFish.add(fish);
@@ -37,14 +40,16 @@ class Swarm {
     }
 
     if (selected){
-      // drawActiveMesh();    
+      // drawActiveMesh();
+      // Currently, does nothing.     
     }
     
+    // Add a new fish for each fish that 
+    // obtained food during this frame.
     while(reproducingFish.size() > 0){
        Fish parent = reproducingFish.remove(0);
        addFish(parent.location.x, parent.location.y); 
     }
-    
   }
   
   // Generate a random neon color

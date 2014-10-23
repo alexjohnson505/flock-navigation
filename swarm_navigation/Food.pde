@@ -1,5 +1,8 @@
-// An array of targets.
+// Food represents an array of targets
+// that fish can eat. 
+
 class Food {
+  
   // Represent targets as PVectors
   ArrayList<PVector> food;
   
@@ -54,7 +57,6 @@ class Food {
   boolean collision(PVector a){
     float threshold = 5.5;
     boolean acc = false;
-    
     
     // Iterate through food 
     for (int i = food.size() - 1; i >= 0; i--){
