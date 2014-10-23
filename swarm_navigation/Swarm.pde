@@ -1,30 +1,30 @@
 
 // Original code example from  IM 2250 Programming for Digital Media, Fall 2014
 // a Swarm represents a collection of fish. Parameters:
-// - (ArrayList) vehicles: arrayList of fish in the swarm
+// - (ArrayList) fishs: arrayList of fish in the swarm
 
 class Swarm {
-  ArrayList<Vehicle> vehicles;
+  ArrayList<Fish> fishs;
   color c;
   int score;
   boolean selected;  
   
   Swarm() {
-    vehicles = new ArrayList<Vehicle>();
+    fishs = new ArrayList<Fish>();
     c = makeNeonColor();
     score = startFish;
     selected = false;
   }
 
   void move() {
-    ArrayList<Vehicle> reproducingFish = new ArrayList<Vehicle>();
+    ArrayList<Fish> reproducingFish = new ArrayList<Fish>();
     
-    Iterator<Vehicle> iterator = vehicles.iterator();
+    Iterator<Fish> iterator = fishs.iterator();
 
     while (iterator.hasNext()) {
-       Vehicle fish = iterator.next();
+       Fish fish = iterator.next();
        
-       fish.fly(vehicles);
+       fish.fly(fishs);
        
        if (food.collision(fish.location)){
            // Add ripple at each eaten food
@@ -41,7 +41,7 @@ class Swarm {
     }
     
     while(reproducingFish.size() > 0){
-       Vehicle parent = reproducingFish.remove(0);
+       Fish parent = reproducingFish.remove(0);
        addFish(parent.location.x, parent.location.y); 
     }
     
@@ -70,7 +70,7 @@ class Swarm {
     float prevX = 0;
     float prevY = 0;
     
-    for (Vehicle fish : vehicles) {
+    for (Fish fish : fishs) {
       float diffX = abs(prevX - fish.location.x);
       float diffY = abs(prevY - fish.location.y);
       
@@ -89,8 +89,8 @@ class Swarm {
     }
   }
   
-  void addVehicle(Vehicle v) {
-    vehicles.add(v);
+  void addFish(Fish v) {
+    fishs.add(v);
   }
 
   void addFish(float x, float y){
@@ -99,8 +99,8 @@ class Swarm {
     initAcceleration.x = random(-0.7, 0.7);
     initAcceleration.y = random(-0.7, 0.7);
   
-    Vehicle v = new Vehicle(initLocation, initAcceleration, c);
-    addVehicle(v);
+    Fish v = new Fish(initLocation, initAcceleration, c);
+    addFish(v);
   }
   
   color getColor(){

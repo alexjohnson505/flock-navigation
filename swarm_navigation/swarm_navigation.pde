@@ -8,14 +8,17 @@ final int margin = 40;
 PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
 
-// Init Object Count
-int startSwarms = 3;
-int startFish   = 20;
-
 // Init Objects
 ArrayList<Ripple> ripples = new ArrayList<Ripple>();
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
 Food food;
+
+/*******************************
+     EDITABLE PARAMETERS
+ *******************************/
+
+int startSwarms = 3;   // Swarms at frame 0
+int startFish   = 20;  // Fish per each swarm
 
 // Limit rate of food regeneration
 // 100 = 100 game ticks per new food;
@@ -88,7 +91,7 @@ void drawHUD() {
   
       // Text
       fill(240);    
-      text("Swarm Score : " + s.score + " Points | " + s.vehicles.size() + " Fish", 30, 0);
+      text("Swarm Score : " + s.score + " Points | " + s.fishs.size() + " Fish", 30, 0);
   
       if (s.selected) {
         noFill();
@@ -173,11 +176,11 @@ void removeOldFish(){
     Swarm fish = swarms.get(i);
     
     // Iterate through fish
-    for (int j = fish.vehicles.size() - 1; j >= 0; j--){
-      Vehicle f = fish.vehicles.get(j);
+    for (int j = fish.fishs.size() - 1; j >= 0; j--){
+      Fish f = fish.fishs.get(j);
       if (f.dangerLevel < 0.1){
         ripples.add(new Ripple(f.location.x, f.location.y, color(255, 255, 150)));
-        fish.vehicles.remove(j);
+        fish.fishs.remove(j);
       }
     }
   }

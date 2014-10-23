@@ -1,5 +1,5 @@
 
-class Vehicle {
+class Fish {
 
   /***************************
       STATUS VARIABLES SETTINGS
@@ -42,8 +42,8 @@ class Vehicle {
   float alignmentWeight = 1.0;
   float cohesionWeight = 1.0;
 
-  // Construction: Vehicle (location_vector, acceleration_vector, color)
-  Vehicle(PVector l, PVector a, color c) {
+  // Construction: Fish (location_vector, acceleration_vector, color)
+  Fish(PVector l, PVector a, color c) {
 
     // use default r, maxSpeed, maxForce
     myColor = c;
@@ -53,8 +53,8 @@ class Vehicle {
   }
 
   // Fly: Iterate & update swarm. Update/border/display
-  void fly(ArrayList < Vehicle > vehicles) {
-    flock(vehicles);
+  void fly(ArrayList < Fish > fishs) {
+    flock(fishs);
     update();
     borders();
     display();
@@ -94,14 +94,14 @@ class Vehicle {
   //   2. alignment (steer towards the average heading of local flockmates)
   //   3. cohesion (steer to move toward the average position of local flockmates).
   // 
-  // Each vehicle only reacts to *nearby* mates. ( determined by distance & direction )
+  // Each fish only reacts to *nearby* mates. ( determined by distance & direction )
   // More information: http://www.red3d.com/cwr/boids/
   
-  void flock(ArrayList < Vehicle > vehicles) {
+  void flock(ArrayList < Fish > fishs) {
     
-    PVector separationForce = separation(vehicles); //  1.) Seperation
-    PVector alignmentForce = alignment(vehicles);   //  2.) Alighment
-    PVector cohesionForce = cohesion(vehicles);     //  3.) Cohesion
+    PVector separationForce = separation(fishs); //  1.) Seperation
+    PVector alignmentForce = alignment(fishs);   //  2.) Alighment
+    PVector cohesionForce = cohesion(fishs);     //  3.) Cohesion
     
     // arbitrarily weight these forces
     separationForce.mult(separationWeight);
@@ -196,14 +196,14 @@ class Vehicle {
   }
 
   // Separation: Check nearby. Steer away. 
-  PVector separation(ArrayList < Vehicle > vehicles) {
+  PVector separation(ArrayList < Fish > fishs) {
     
     float desiredseparation = 35.0f;
     PVector steer = new PVector(0, 0, 0);
     int count = 0;
     
-    // Check proximity for all vehicles
-    for (Vehicle other: vehicles) {
+    // Check proximity for all fishs
+    for (Fish other: fishs) {
       
       float d = PVector.dist(location, other.location);
      
@@ -237,14 +237,14 @@ class Vehicle {
     return steer;
   }
 
-  // Seperate: Check nearby vehicles. Apply force to steer away
-  void separate(ArrayList < Vehicle > vehicles) {
+  // Seperate: Check nearby fishs. Apply force to steer away
+  void separate(ArrayList < Fish > fishs) {
     float desiredseparation = r * 1.5;
     PVector sum = new PVector();
     int count = 0;
     
-    // Check proximity of all vehicles
-    for (Vehicle other: vehicles) {
+    // Check proximity of all fishs
+    for (Fish other: fishs) {
       float d = PVector.dist(location, other.location);
       
       // If the distance is greater than 0 and less than 
@@ -275,13 +275,13 @@ class Vehicle {
   }
 
   // --------------------------------------------------------------------
-  // Alignment: Average velocity of nearby vehicles
-  PVector alignment(ArrayList < Vehicle > vehicles) {
+  // Alignment: Average velocity of nearby fishs
+  PVector alignment(ArrayList < Fish > fishs) {
     // neighborDistance defined as an instance variable
     PVector sum = new PVector(0, 0);
     int count = 0;
     
-    for (Vehicle other: vehicles) {
+    for (Fish other: fishs) {
       float d = PVector.dist(location, other.location);
       if ((d > 0) && (d < neighborDistance)) {
         sum.add(other.velocity);
@@ -301,14 +301,14 @@ class Vehicle {
     }
   }
 
-  // Cohesion: Steer towards average center location of nearby vehicles
-  PVector cohesion(ArrayList < Vehicle > vehicles) {
+  // Cohesion: Steer towards average center location of nearby fishs
+  PVector cohesion(ArrayList < Fish > fishs) {
     
     // Start with empty vector to accumulate all locations
     PVector sum = new PVector(0, 0);
     
     int count = 0;
-    for (Vehicle other: vehicles) {
+    for (Fish other: fishs) {
       float d = PVector.dist(location, other.location);
       if ((d > 0) && (d < neighborDistance)) {
         sum.add(other.location); // Add location
@@ -323,8 +323,8 @@ class Vehicle {
     }
   }
   
-  // Wander: implement Craig Reynolds' wandering vehicle behavior.
-  // vehicle predicts future location as a fixed distance in the 
+  // Wander: implement Craig Reynolds' wandering fish behavior.
+  // fish predicts future location as a fixed distance in the 
   // direction of its velocity, draws a circle with radius r at that 
   // location, and picks a random point along the circumference of 
   // the circle to use as the locaton towards which it will wander
