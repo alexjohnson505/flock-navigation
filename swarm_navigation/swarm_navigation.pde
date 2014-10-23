@@ -18,17 +18,8 @@
 
 // Press 'D' to grant extra fish to the currently
 // selected swarm.
- 
-// Updated features include:
-// Ripples for Fish Spawn
-// Ripples for Food spawn
-// Ripples for Fish Death
-// Constant Rate of food spawn
-// Opacities for starving fish
-// Re-names objects to be more appropriate
-// Refactored code
-// Users can now manually drop food
-// Display fish count in GUI
+
+/********************************/
 
 import java.util.Iterator;
 import java.lang.Math;
