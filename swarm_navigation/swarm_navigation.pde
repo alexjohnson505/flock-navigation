@@ -6,6 +6,7 @@ import Food.pde;
 /*******************************
      USER INTERACTION
  *******************************/
+
 // Swarms navigate the environment. When a fish
 // collects a food, they reproduce, and their health
 // is refreshed. When a fish goes too long without
@@ -500,6 +501,13 @@ class Ripple {
 // Fish calculates it's location, direction, and
 // acceleration based on surrounding members of 
 // the same swarm.
+
+// Implements Craig Reynold's classic autonomous 
+// steering behaviors, see http://www.red3d.com/cwr/ 
+// for more details. This example is based, in part, 
+// on code from the book THE NATURE OF CODE by Daniel 
+// Shiffman, http://natureofcode.com
+
 class Fish {
 
   /***************************
