@@ -31,6 +31,10 @@ final int margin = 40;
 PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
 
+// Window Size
+int windowWidth = 800;
+int windowHeight = 400;
+
 // Init Objects
 ArrayList<Ripple> ripples = new ArrayList<Ripple>();
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
@@ -55,10 +59,7 @@ float decayRate = 0.1;
 
 void setup() {
 
-  float width  = 800;
-  float height = 400;
-
-  size((int)width, (int)height);
+  size(screen.width, screen.height);
   
   food = new Food();
 
@@ -77,6 +78,12 @@ void setup() {
     // Init a food for every starting fish in a swarm
     food.addFood();
   }
+}
+
+void setWindowSize(int w, int h){
+	println(w + " " + h);
+	windowWidth = w;
+	windowHeight = h;
 }
 
 void draw() {
