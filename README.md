@@ -3,6 +3,11 @@ swarm-navigation
 
 Using Processing.js to expiriment with flock behavior. This project aims to provide basic 'visual' delight to the user, while demonstrating semi-random flocking AI behaviour.
 
+Running:
+-------------
+
+Load src/index.html from a web server. To run locally, I recommend installing MAMP, and pointing the root directory to swarm-navigation/src. This sets up a local, development Apache server. You can then load the project from locahost:8888.
+
 User Interaction:
 -------------
 
@@ -21,10 +26,6 @@ color in the top left of the screen.
 Press 'D' to grant extra fish to the currently
 selected swarm.
 
-Running:
--------------
-
-Serve index.html from an Apache server. 
 
 Special Thanks:
 -------------
