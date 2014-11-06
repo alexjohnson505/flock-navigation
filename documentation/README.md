@@ -11,7 +11,14 @@ Boids
 
 To quote Craig Reynolds, 
 
-	In 1986 I made a computer model of coordinated animal motion such as bird flocks and fish schools. It was based on three dimensional computational geometry of the sort normally used in computer animation or computer aided design. I called the generic simulated flocking creatures boids. The basic flocking model consists of three simple [steering behaviors](http://www.red3d.com/cwr/steer/) which describe how an individual boid maneuvers based on the positions and velocities its nearby flockmates ([source](http://www.red3d.com/cwr/boids/)).
+> In 1986 I made a computer model of coordinated animal 
+> motion such as bird flocks and fish schools. It was based 
+> on three dimensional computational geometry of the sort 
+> normally used in computer animation or computer aided design.
+> I called the generic simulated flocking creatures boids. 
+> The basic flocking model consists of three simple [steering behaviors](http://www.red3d.com/cwr/steer/) 
+> which describe how an individual boid maneuvers based on 
+> the positions and velocities its nearby flockmates ([source](http://www.red3d.com/cwr/boids/)).
 
 ![Separation](img/separation.gif)
 **Separation**: Avoid crowding flockmates.
