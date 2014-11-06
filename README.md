@@ -3,6 +3,11 @@ swarm-navigation
 
 Using Processing.js to expiriment with flock behavior. This project aims to provide basic 'visual' delight to the user, while demonstrating semi-random flocking AI behaviour.
 
+Read More:
+-------------
+To read more about Flocking Behaviour, please refer to this project's [Background Documentation](https://github.com/alexjohnson505/swarm-navigation/tree/master/documentation)
+
+
 Running:
 -------------
 
