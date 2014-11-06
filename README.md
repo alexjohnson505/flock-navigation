@@ -31,7 +31,6 @@ color in the top left of the screen.
 Press 'D' to grant extra fish to the currently
 selected swarm.
 
-
 Special Thanks:
 -------------
 
