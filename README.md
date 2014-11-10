@@ -8,6 +8,10 @@ Read More:
 To read more about Flocking Behaviour, please refer to this project's [Background Documentation](https://github.com/alexjohnson505/swarm-navigation/tree/master/documentation)
 
 
+Demo:
+-------------
+Online: [alexjohnson.io/swarm-navigation](http://alexjohnson.io/swarm-navigation)
+
 Running:
 -------------
 
