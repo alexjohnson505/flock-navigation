@@ -44,14 +44,14 @@ Food food;
 int startSwarms = 4;   // Starting Swarms
 int startFish   = 20;  // Initial fish per swarm
 
-// Limit rate of food regeneration
+// Rate of food regeneration
 // (default) 20 game ticks per new food;
 int foodRegenCounter = 0;
 int foodRegenThreshold = 20;
 
 // Fish decay (starve) over time.
 // decayRate represents damage per
-// tick of not eating. 
+// tick of not eating.
 float decayRate = 0.1;
 
 void setup() {
@@ -671,7 +671,6 @@ class Fish {
   // Arrive: Calculate steering force towards a target.
   // Apply damping to avoid overshooting
   // demonstrates "desired minus velocity"
-  
   void arrive(PVector target) {
 
     // desired is a vector pointing from our location to the target
@@ -731,9 +730,7 @@ class Fish {
     }
     
     // average 
-    if (count > 0) {
-      steer.div((float) count);
-    }
+    if (count > 0) { steer.div((float) count); }
     
     // as long as the vector is greater than 0
     if (steer.mag() > 0) {
@@ -869,14 +866,14 @@ class Fish {
   }
 
   // setMaxSpeed: set the maximum speed
-  void setMaxSpeed(float m) {
-    maxSpeed = m;
-  }
+  // void setMaxSpeed(float m) {
+  //   maxSpeed = m;
+  // }
 
   // setMaxForce: set the maximum force
-  void setMaxForce(float f) {
-    maxForce = f;
-  }
+  // void setMaxForce(float f) {
+  //   maxForce = f;
+  // }
 
   // drawWanderTarget: draw the circle associated with wandering
   void drawWanderTarget(PVector location, PVector circle, PVector target, float rad) {

@@ -64,6 +64,7 @@ TO-DO:
 - Tweak Parameters via HTML/JS UI
 - Section/Quadrant boids for efficiency
 - Control "Alpha" fish, aim your swarm to victory
+- *** "Survival Mode" -> Introduce new swarms as swarms go extinct
 
 Special Thanks:
 -------------
