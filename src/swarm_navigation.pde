@@ -37,8 +37,6 @@ ArrayList<Ripple> ripples = new ArrayList<Ripple>();
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
 Food food;
 
-String wtf = "Hmmmmmm";
-
 /*******************************
      EDITABLE PARAMETERS
  *******************************/
@@ -62,21 +60,30 @@ void setup() {
   
   food = new Food();
 
-  // Init Swarms 
+  // Init NPC Swarms 
   for (int i = startSwarms; i > 0; i--) {
-    Swarm s = new Swarm();
-    swarms.add(s);
-  } 
+    swarms.add(new Swarm());
+  }
 
   // Init Start Fish
   for (int i = startFish; i > 0; i--) {
     for (Swarm s : swarms) {
+      
+      // Start top right
       s.addFish(100, 100);
     }
   
     // Init a food for every starting fish in a swarm
     food.addFood();
   }
+
+
+  // Init Player Swarm
+  var p = new PlayerSwarm();
+  p.addFish(900, 150);
+
+  swarms.add(p);
+
 }
 
 void setWindowSize(int w, int h){
@@ -918,4 +925,34 @@ class Fish {
   void feed(){
     dangerLevel = 255;
   }
-}
+};
+
+class Player extends Fish {
+
+
+  Player(){
+
+  }
+
+};
+
+class PlayerSwarm extends Swarm {
+  ArrayList<Player> fishs; 
+  color c;
+
+  PlayerSwarm(){
+    c = color(240, 240, 240);
+    fishs = new ArrayList<Player>;
+  }
+
+  void addFish(float x, float y){
+    initLocation.x = x;
+    initLocation.y = y;
+    initAcceleration.x = random(-0.7, 0.7);
+    initAcceleration.y = random(-0.7, 0.7);
+  
+    Fish v = new Fish(initLocation, initAcceleration, color(210, 0, 0));
+    addFish(v);
+  }
+
+};
