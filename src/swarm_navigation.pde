@@ -158,8 +158,10 @@ void keyPressed(){
      Swarm s = swarms.get(i);
      
      s.score += -10;
-     int x = displayWidth / 4;
-     int y = displayHeight / 4;
+
+     int x = screen.width / 4;
+     int y = screen.height / 4;
+
      s.addFish(x, y);
      ripples.add(new Ripple(x, y, s.c));
   }
