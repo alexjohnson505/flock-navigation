@@ -547,7 +547,7 @@ class Fish {
       FLOCKING SETTINGS
    ***************************/
    
-  float separationWeight = 2.5; // (default) 1.5
+  float separationWeight = 3.0; // (default) 1.5
   float alignmentWeight = 1.0;
   float cohesionWeight = 1.0;
 
