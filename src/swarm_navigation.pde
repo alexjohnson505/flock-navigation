@@ -1,7 +1,9 @@
-// Alex Johnson - IM 2250 - Programming for Digital Media
-// Programming Exploration 5 v2 | Due 10/27/14
 
-import Food.pde;
+// SWARM NAVIGATION 
+// Simulation of Flocking AI
+
+// Updated by Alex Johnson. More info on:
+// github.com/alexjohnson505/swarm-navigation
 
 /*******************************
      USER INTERACTION
@@ -10,17 +12,15 @@ import Food.pde;
 // Swarms navigate the environment. When a fish
 // collects a food, they reproduce, and their health
 // is refreshed. When a fish goes too long without
-// eating, they will fade away and die (yellow ripple).
+// eating, they will fade away and die.
 
 // Click on the screen to place a new food item
 // at the center of your cursor.
 
 // Press 'W' & 'S' to change the currently selected
 // swarm. Notice how a white box is drawn around their
-// color in the top left of the screen.
-
-// Press 'D' to grant extra fish to the currently
-// selected swarm.
+// color in the top left of the screen. Press 'D' to 
+// grant extra fish to the currently selected swarm
 
 /********************************/
 
@@ -167,6 +167,7 @@ void keyPressed(){
   }
 }
 
+// Change the current 'active' swarm
 void changeSelected(int x){
   int i = selectedSwarmIndex();
   int size = swarms.size();
@@ -213,6 +214,7 @@ void removeOldRipples(){
 
 // Garbage collect dead fish
 void removeOldFish(){
+
   // Iterate through Swarms
   for (int i = swarms.size() - 1; i >= 0; i--) {
     Swarm fish = swarms.get(i);
@@ -511,7 +513,7 @@ class Ripple {
 class Fish {
 
   /***************************
-      STATUS VARIABLES SETTINGS
+       STATUS VARIABLES
    ***************************/
 
   PVector location;
@@ -519,7 +521,7 @@ class Fish {
   PVector acceleration;
 
   /***************************
-      VEHICLE SETTINGS
+       FISH SETTINGS
    ***************************/
 
   color myColor;
@@ -672,24 +674,27 @@ class Fish {
 
   // Arrive: Calculate steering force towards a target.
   // Apply damping to avoid overshooting
-  
-  // ... arrive behavior 
   // demonstrates "desired minus velocity"
   
   void arrive(PVector target) {
+
     // desired is a vector pointing from our location to the target
     PVector desired = PVector.sub(target, location);
     float dmag = desired.mag();
+
     // normalize desired and scale w/ arbitrary damping within 100 pixels
     desired.normalize();
     if (dmag < damping) {
+
       // we are close to the target, slooooooooow down
       float mag = map(dmag, 0, damping, 0, maxSpeed);
       desired.mult(mag);
     } else {
+
       // otherwise proceed at full speed
       desired.mult(maxSpeed);
     }
+
     // steer = desired - velocity
     PVector steer = PVector.sub(desired, velocity);
     steer.limit(maxForce); // limit to maximum steering force
@@ -783,9 +788,10 @@ class Fish {
     }
   }
 
-  // --------------------------------------------------------------------
+
   // Alignment: Average velocity of nearby fishs
   PVector alignment(ArrayList < Fish > fishs) {
+
     // neighborDistance defined as an instance variable
     PVector sum = new PVector(0, 0);
     int count = 0;
@@ -799,6 +805,7 @@ class Fish {
     }
     
     if (count > 0) {
+
       sum.div((float) count);
       sum.normalize();
       sum.mult(maxSpeed);
@@ -860,10 +867,10 @@ class Fish {
 
   // applyForce: add force to current acceleration
   void applyForce(PVector force) {
+
     // Note: add mass here if you want acceleration = force / mass
     acceleration.add(force);
   }
-
 
   // setMaxSpeed: set the maximum speed
   void setMaxSpeed(float m) {
