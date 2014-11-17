@@ -32,10 +32,6 @@ final int margin = 40;
 PVector initLocation = new PVector(0, 0);
 PVector initAcceleration = new PVector(0, 0);
 
-// Window Size
-int windowWidth = 800;
-int windowHeight = 400;
-
 // Init Objects
 ArrayList<Ripple> ripples = new ArrayList<Ripple>();
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
@@ -223,7 +219,7 @@ void removeOldFish(){
     for (int j = fish.fishs.size() - 1; j >= 0; j--){
       Fish f = fish.fishs.get(j);
       if (f.dangerLevel < 0.2){
-        ripples.add(new Ripple(f.location.x, f.location.y, color(255, 255, 150)));
+        ripples.add(new Ripple(f.location.x, f.location.y, color(120, 120, 120)));
         fish.fishs.remove(j);
       }
     }
@@ -710,7 +706,7 @@ class Fish {
   }
 
   // Separation: Check nearby. Steer away. 
-  PVector separation(ArrayList < Fish > fishs) {
+  PVector separation(ArrayList<Fish> fishs) {
     
     float desiredseparation = 35.0f;
     PVector steer = new PVector(0, 0, 0);
@@ -851,9 +847,9 @@ class Fish {
     
     // calculate new location to steer towards on the wander circle
     PVector circleloc = velocity.get(); // start with velocity
-    circleloc.normalize(); // normalize to get heading
-    circleloc.mult(wanderDistance); // multiply by distance
-    circleloc.add(location); // make it relative to boid's location
+    circleloc.normalize();              // normalize to get heading
+    circleloc.mult(wanderDistance);     // multiply by distance
+    circleloc.add(location);            // make it relative to boid's location
     
     // We need to know the heading to offset wanderTheta
     float h = velocity.heading2D();
