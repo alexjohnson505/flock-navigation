@@ -37,6 +37,8 @@ ArrayList<Ripple> ripples = new ArrayList<Ripple>();
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
 Food food;
 
+String wtf = "Hmmmmmm";
+
 /*******************************
      EDITABLE PARAMETERS
  *******************************/
@@ -56,7 +58,7 @@ float decayRate = 0.1;
 
 void setup() {
 
-  size(screen.width, screen.height);
+  size(screen.width * .75, screen.height * .5);
   
   food = new Food();
 
@@ -528,16 +530,16 @@ class Fish {
   float maxForce = 0.03;   // maximum steering force
   float maxSpeed = 1.5;    // maximum speed
 
-  float damping = 100;         // arrival damping in pixels
-  float neighborDistance = 50; // cohesion variables
+  float damping = 100;           // arrival damping in pixels
+  float neighborDistance = 50;   // cohesion variables
 
   /***************************
       WANDER SETTINGS
    ***************************/
    
-  float wanderRadius = 10;       // radius for our "wander circle"
-  float wanderDistance = 80;     // distance for our "wander circle"
-  float wanderThetaChange = 0.3; // amount to change wander theta
+  float wanderRadius = 10;        // radius for our "wander circle"
+  float wanderDistance = 80;      // distance for our "wander circle"
+  float wanderThetaChange = 0.3;  // amount to change wander theta
   boolean wanderTrace = false;
   float wanderTheta;
 
