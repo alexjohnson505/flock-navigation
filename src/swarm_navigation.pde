@@ -547,7 +547,7 @@ class Fish {
       FLOCKING SETTINGS
    ***************************/
    
-  float separationWeight = 1.5;
+  float separationWeight = 2.5; // (default) 1.5
   float alignmentWeight = 1.0;
   float cohesionWeight = 1.0;
 
@@ -751,22 +751,45 @@ class Fish {
     float desiredseparation = r * 1.5;
     PVector sum = new PVector();
     int count = 0;
+
+    for (int i = swarms.size() - 1; i >= 0; i--) {
+      Swarm fish = swarms.get(i);
     
-    // Check proximity of all fishs
-    for (Fish other: fishs) {
-      float d = PVector.dist(location, other.location);
-      
-      // If the distance is greater than 0 and less than 
-      // an arbitrary amount (0 when you are yourself)
-      if ((d > 0) && (d < desiredseparation)) {
-        // Calculate vector pointing away from neighbor
-        PVector diff = PVector.sub(location, other.location);
-        diff.normalize();
-        diff.div(d); // Weight by distance
-        sum.add(diff);
-        count++; // Keep track of how many
+      // Iterate through fish
+      for (int j = fish.fishs.size() - 1; j >= 0; j--){
+        Fish other = fish.fishs.get(j);
+
+        float d = PVector.dist(location, other.location);
+        
+        // If the distance is greater than 0 and less than 
+        // an arbitrary amount (0 when you are yourself)
+        if ((d > 0) && (d < desiredseparation)) {
+          // Calculate vector pointing away from neighbor
+          PVector diff = PVector.sub(location, other.location);
+          diff.normalize();
+          diff.div(d); // Weight by distance
+          sum.add(diff);
+          count
+        }
       }
+
     }
+    
+    // // Check proximity of all fishs
+    // for (Fish other: fishs) {
+    //   float d = PVector.dist(location, other.location);
+      
+    //   // If the distance is greater than 0 and less than 
+    //   // an arbitrary amount (0 when you are yourself)
+    //   if ((d > 0) && (d < desiredseparation)) {
+    //     // Calculate vector pointing away from neighbor
+    //     PVector diff = PVector.sub(location, other.location);
+    //     diff.normalize();
+    //     diff.div(d); // Weight by distance
+    //     sum.add(diff);
+    //     count++; // Keep track of how many
+    //   }
+    // }
     
     // average -- divide by how many
     if (count > 0) {
