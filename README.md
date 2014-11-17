@@ -53,7 +53,7 @@ color in the top left of the screen.
 Press 'D' to grant extra fish to the currently
 selected swarm.
 
-Todo
+TO-DO:
 -------------
 
 > This file exists as a reminder of
@@ -69,4 +69,4 @@ Todo
 Special Thanks:
 -------------
 
-Inspiration and code from ss5_7_flock, and in class example program, implementing Craig Reynold's classic  autonomous steering behaviors, see http://www.red3d.com/cwr Original code from 'THE NATURE OF CODE' by Daniel Shiffman, more details: http://natureofcode.com
+Inspiration and code from ss5_7_flock, and in class example program, implementing Craig Reynold's classic [autonomous steering behaviors](http://www.red3d.com/cwr). Original code from '[THE NATURE OF CODE](http://natureofcode.com)' by Daniel Shiffman
