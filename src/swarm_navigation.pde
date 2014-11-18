@@ -35,6 +35,10 @@ PVector initAcceleration = new PVector(0, 0);
 // Init Objects
 ArrayList<Ripple> ripples = new ArrayList<Ripple>();
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
+
+// Init player character
+PlayerSwarm playerSwarm = new PlayerSwarm();
+
 Food food;
 
 /*******************************
@@ -42,7 +46,7 @@ Food food;
  *******************************/
 
 int startSwarms = 3;   // Starting Swarms
-int startFish   = 40;  // Initial fish per swarm
+int startFish   = 30;  // Initial fish per swarm
 
 // Rate of food regeneration
 // (default) 20 game ticks per new food;
@@ -66,25 +70,15 @@ void setup() {
   }
 
   // Init Start Fish
-  for (int i = startFish; i > 0; i--) {
-    for (Swarm s : swarms) {
-      
+  for (Swarm s : swarms) {
+    for (int i = startFish; i > 0; i--) {
       // Start top right
       s.addFish(random(0, screen.width), random(screen.height));
     }
-  
-    // Init a food for every starting fish in a swarm
-    food.addFood();
-  }
-
-  // Init Player Swarm
-  var p = new PlayerSwarm();
+  } 
 
   // Add single player fish to center
-  p.addFish(screen.width / 2, screen.height / 2);
-  
-  // Include player swarm into swarm array
-  swarms.add(p);
+  playerSwarm.addFish(screen.width / 2, screen.height / 2);
 }
 
 void draw() {
@@ -92,6 +86,9 @@ void draw() {
   
   for (Ripple r : ripples){ r.draw(); } // Draw Ripples
   for (Swarm s : swarms) { s.move(); }  // Draw Swarms
+
+  // Draw player swarm
+  playerSwarm.move()
   
   food.draw(); // Draw Food
   drawHUD();   // Draw HUD
@@ -100,7 +97,7 @@ void draw() {
   removeOldFish();    // Garbage Collect
 }
 
-void mouseClicked(){
+void mouseDragged(){
   food.addFood(mouseX, mouseY);
 }
 
@@ -145,6 +142,7 @@ void drawHUD() {
 }
 
 void keyPressed(){
+
   if (key == 's'){
     changeSelected(1);
   }
@@ -163,6 +161,17 @@ void keyPressed(){
 
      s.addFish(x, y);
      ripples.add(new Ripple(x, y, s.c));
+  }
+
+  // Check for arrow keys
+  // Control player boid
+  if (key == CODED) {
+    if (keyCode == RIGHT) {
+
+      
+    } else if (keyCode == LEFT) {
+      
+    } 
   }
 }
 
@@ -920,7 +929,6 @@ class Player extends Fish {
   Player(){
 
   }
-
 };
 
 class PlayerSwarm extends Swarm {
