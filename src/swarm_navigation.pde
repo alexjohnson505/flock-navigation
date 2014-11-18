@@ -41,18 +41,18 @@ Food food;
      EDITABLE PARAMETERS
  *******************************/
 
-int startSwarms = 4;   // Starting Swarms
-int startFish   = 20;  // Initial fish per swarm
+int startSwarms = 3;   // Starting Swarms
+int startFish   = 40;  // Initial fish per swarm
 
 // Rate of food regeneration
 // (default) 20 game ticks per new food;
 int foodRegenCounter = 0;
-int foodRegenThreshold = 20;
+int foodRegenThreshold = 15;
 
 // Fish decay (starve) over time.
 // decayRate represents damage per
 // tick of not eating.
-float decayRate = 0.1;
+float decayRate = 0.05;
 
 void setup() {
 
@@ -77,19 +77,14 @@ void setup() {
     food.addFood();
   }
 
-
   // Init Player Swarm
   var p = new PlayerSwarm();
+
+  // Add single player fish to center
   p.addFish(screen.width / 2, screen.height / 2);
-
+  
+  // Include player swarm into swarm array
   swarms.add(p);
-
-}
-
-void setWindowSize(int w, int h){
-	println(w + " " + h);
-	windowWidth = w;
-	windowHeight = h;
 }
 
 void draw() {
@@ -114,11 +109,9 @@ void mouseClicked(){
 void drawHUD() {
   
   // Draw stats for each swarm
-  for (int i = swarms.size () - 1; i >= 0; i--) {
+  for (int i = swarms.size() - 1; i >= 0; i--) {
     
-    // Get current swarm
-    Swarm s = swarms.get(i);
-    textSize(15);
+    Swarm s = swarms.get(i); // Get current swarm
     
     int y = 25 * i + 30;  // vertical offset
     int x = 20;           // horiontal offset
@@ -131,19 +124,18 @@ void drawHUD() {
       rect(0, -10, 20, 10);
   
       // Text
-      fill(240);    
-      
+      fill(255);    
+      textSize(15);
+
       // More info:
-      // text("Swarm Score : " + s.score + " Points | " + s.fishs.size() + " Fish", 30, 0);
-      
-      // Basic info: fish count
-      text(s.fishs.size(), 30, 0);
+      // text("Swarm Score : " + s.score + " Points | " + s.fishs.size() + " Fish", 30, 0);    
+      text(s.countFish(), 30, 0); // Fish count
   
       // Display indicator for currently selected swarm 
       if (s.selected) {
         noFill();
         stroke(2);
-        stroke(240, 240, 240);
+        stroke(255, 255, 255);
         rect(-5, -16, 29, 22);
       }
      
@@ -345,6 +337,10 @@ class Swarm {
     c = makeNeonColor();
     score = startFish;
     selected = false;
+  }
+
+  int countFish(){
+    return fishs.size();
   }
 
   void move() {
@@ -549,7 +545,6 @@ class Fish {
   float wanderRadius = 10;        // radius for our "wander circle"
   float wanderDistance = 80;      // distance for our "wander circle"
   float wanderThetaChange = 0.3;  // amount to change wander theta
-  boolean wanderTrace = false;
   float wanderTheta;
 
   /***************************
@@ -761,6 +756,7 @@ class Fish {
     PVector sum = new PVector();
     int count = 0;
 
+    // Check proximity for ALL fish
     for (int i = swarms.size() - 1; i >= 0; i--) {
       Swarm fish = swarms.get(i);
     
@@ -781,7 +777,6 @@ class Fish {
           count
         }
       }
-
     }
     
     // // Check proximity of all fishs
@@ -851,6 +846,7 @@ class Fish {
     PVector sum = new PVector(0, 0);
     
     int count = 0;
+
     for (Fish other: fishs) {
       float d = PVector.dist(location, other.location);
       if ((d > 0) && (d < neighborDistance)) {
@@ -871,26 +867,26 @@ class Fish {
   // direction of its velocity, draws a circle with radius r at that 
   // location, and picks a random point along the circumference of 
   // the circle to use as the locaton towards which it will wander
-  void wander() {
+  // void wander() {
     
-    // random point on the circle
-    wanderTheta += random(-wanderThetaChange, wanderThetaChange);
+  //   // random point on the circle
+  //   wanderTheta += random(-wanderThetaChange, wanderThetaChange);
     
-    // calculate new location to steer towards on the wander circle
-    PVector circleloc = velocity.get(); // start with velocity
-    circleloc.normalize();              // normalize to get heading
-    circleloc.mult(wanderDistance);     // multiply by distance
-    circleloc.add(location);            // make it relative to boid's location
+  //   // calculate new location to steer towards on the wander circle
+  //   PVector circleloc = velocity.get(); // start with velocity
+  //   circleloc.normalize();              // normalize to get heading
+  //   circleloc.mult(wanderDistance);     // multiply by distance
+  //   circleloc.add(location);            // make it relative to boid's location
     
-    // We need to know the heading to offset wanderTheta
-    float h = velocity.heading2D();
-    PVector circleOffSet = new PVector(wanderRadius * cos(wanderTheta + h), wanderRadius * sin(wanderTheta + h));
-    PVector target = PVector.add(circleloc, circleOffSet);
-    seek(target);
+  //   // We need to know the heading to offset wanderTheta
+  //   float h = velocity.heading2D();
+  //   PVector circleOffSet = new PVector(wanderRadius * cos(wanderTheta + h), wanderRadius * sin(wanderTheta + h));
+  //   PVector target = PVector.add(circleloc, circleOffSet);
+  //   seek(target);
     
-    // Render wandering circle, etc. 
-    if (wanderTrace) drawWanderTarget(location, circleloc, target, wanderRadius);
-  }
+  //   // Render wandering circle, etc. 
+  //   drawWanderTarget(location, circleloc, target, wanderRadius);
+  // }
 
   // applyForce: add force to current acceleration
   void applyForce(PVector force) {
@@ -899,26 +895,17 @@ class Fish {
     acceleration.add(force);
   }
 
-  // setMaxSpeed: set the maximum speed
-  // void setMaxSpeed(float m) {
-  //   maxSpeed = m;
-  // }
-
-  // setMaxForce: set the maximum force
-  // void setMaxForce(float f) {
-  //   maxForce = f;
-  // }
-
   // drawWanderTarget: draw the circle associated with wandering
-  void drawWanderTarget(PVector location, PVector circle, PVector target, float rad) {
-    stroke(188, 188, 255);
-    noFill();
-    ellipseMode(CENTER);
-    ellipse(circle.x, circle.y, rad * 2, rad * 2);
-    ellipse(target.x, target.y, 4, 4);
-    line(location.x, location.y, circle.x, circle.y);
-    line(circle.x, circle.y, target.x, target.y);
-  }
+  // void drawWanderTarget(PVector location, PVector circle, PVector target, float rad) {
+  //   console.log("hey");
+  //   stroke(188, 188, 255);
+    
+  //   ellipseMode(CENTER);
+  //   ellipse(circle.x, circle.y, rad * 2, rad * 2);
+  //   ellipse(target.x, target.y, 4, 4);
+  //   line(location.x, location.y, circle.x, circle.y);
+  //   line(circle.x, circle.y, target.x, target.y);
+  // }
   
   // Fish eats. It's now full, and we can 
   // reset it's danger level
@@ -937,12 +924,12 @@ class Player extends Fish {
 };
 
 class PlayerSwarm extends Swarm {
-  ArrayList<Player> fishs; 
+  // ArrayList<Player> blarg; 
   color c;
 
   PlayerSwarm(){
-    c = color(240, 240, 240);
-    fishs = new ArrayList<Player>;
+    c = color(255, 0, 0);
+    // blarg = new ArrayList<Player>;
   }
 
   void addFish(float x, float y){
@@ -951,8 +938,17 @@ class PlayerSwarm extends Swarm {
     initAcceleration.x = random(-0.7, 0.7);
     initAcceleration.y = random(-0.7, 0.7);
   
-    Fish v = new Fish(initLocation, initAcceleration, color(210, 0, 0));
+    Fish v = new Fish(initLocation, initAcceleration, color(255, 0, 0));
     addFish(v);
+  }
+
+  int countFish(){
+//    console.log(blarg[0]);
+    return fishs.size()
+  }
+
+  color getColor(){
+    return c;
   }
 
 };
