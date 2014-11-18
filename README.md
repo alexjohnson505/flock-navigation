@@ -61,6 +61,7 @@ TO-DO:
 
 "Improvements"
 - Swarms should avoid collisions with each other.
+- Player controlled boid should ignore heading of neighbors
 - Tweak Parameters via HTML/JS UI
 - Section/Quadrant boids for efficiency
 - Control "Alpha" fish, aim your swarm to victory
