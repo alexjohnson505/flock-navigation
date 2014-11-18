@@ -56,7 +56,7 @@ float decayRate = 0.1;
 
 void setup() {
 
-  size(screen.width * .75, screen.height * .5);
+  size(screen.width, screen.height);
   
   food = new Food();
 
@@ -70,7 +70,7 @@ void setup() {
     for (Swarm s : swarms) {
       
       // Start top right
-      s.addFish(100, 100);
+      s.addFish(random(0, screen.width), random(screen.height));
     }
   
     // Init a food for every starting fish in a swarm
@@ -80,7 +80,7 @@ void setup() {
 
   // Init Player Swarm
   var p = new PlayerSwarm();
-  p.addFish(900, 150);
+  p.addFish(screen.width / 2, screen.height / 2);
 
   swarms.add(p);
 
@@ -556,9 +556,9 @@ class Fish {
       FLOCKING SETTINGS
    ***************************/
    
-  float separationWeight = 3.0; // (default) 1.5
-  float alignmentWeight = 1.0;
-  float cohesionWeight = 1.0;
+  float separationWeight = 3; // (default) 1.5
+  float alignmentWeight = 1;
+  float cohesionWeight = 2;
 
   // Construction: Fish (location_vector, acceleration_vector, color)
   Fish(PVector l, PVector a, color c) {
