@@ -56,7 +56,7 @@ int foodRegenThreshold = 15;
 // Fish decay (starve) over time.
 // decayRate represents damage per
 // tick of not eating.
-float decayRate = 0.05;
+float decayRate = 0.1;
 
 void setup() {
 
@@ -78,7 +78,10 @@ void setup() {
   } 
 
   // Add single player fish to center
-  playerSwarm.addFish(screen.width / 2, screen.height / 2);
+  // playerSwarm.addFish(screen.width / 4, screen.height / 2);
+  playerSwarm.addFish(200, 200);
+  playerSwarm.addFish(210, 210);
+  playerSwarm.addFish(215, 220);
 }
 
 void draw() {
@@ -155,30 +158,31 @@ void keyPressed(){
     changeSelected(-1);
   }
   
-  if (key == 'd'){
-     int i = selectedSwarmIndex();
-     Swarm s = swarms.get(i);
+  // if (key == 'd'){
+  //    int i = selectedSwarmIndex();
+  //    Swarm s = swarms.get(i);
      
-     s.score += -10;
+  //    s.score += -10;
 
-     int x = screen.width / 4;
-     int y = screen.height / 4;
+  //    int x = screen.width / 4;
+  //    int y = screen.height / 4;
 
-     s.addFish(x, y);
-     ripples.add(new Ripple(x, y, s.c));
-  }
+  //    s.addFish(x, y);
+  //    ripples.add(new Ripple(x, y, s.c));
+  // }
 
   // Check for arrow keys
   // Control player boid
   if (key == CODED) {
     if (keyCode == RIGHT) {
-
-      
+      console.log(playerSwarm.fishs.get(0));
+      playerSwarm.fishs.get(0).turn(1);
     } else if (keyCode == LEFT) {
-      
+      console.log(playerSwarm.fishs.get(0));
+      playerSwarm.fishs.get(0).turn(-1);
     } 
   }
-}
+};
 
 // Change the current 'active' swarm
 void changeSelected(int x){
@@ -391,7 +395,7 @@ class Swarm {
        addFish(parent.location.x, parent.location.y); 
     }
   }
-  
+
   // Generate a random neon color
   color makeNeonColor(){
     float r = random(0, 255);
@@ -824,7 +828,6 @@ class Fish {
     }
   }
 
-
   // Alignment: Average velocity of nearby fishs
   PVector alignment(ArrayList < Fish > fishs) {
 
@@ -926,23 +929,32 @@ class Fish {
   void feed(){
     dangerLevel = 255;
   }
-};
 
-class Player extends Fish {
-
-
-  Player(){
-
+  void turn(int i){
+    console.log("Fish Tunrned")
   }
 };
 
+class PlayerFish extends Fish {
+
+
+  PlayerFish(){
+
+  }
+
+  void turn(int i){
+    console.log("Turning");
+  }
+
+};
+
 class PlayerSwarm extends Swarm {
-  // ArrayList<Player> blarg; 
+  // ArrayList<Fish> fishs; 
   color c;
 
   PlayerSwarm(){
     c = color(255, 0, 0);
-    // blarg = new ArrayList<Player>;
+    // fishs = new ArrayList<Fish>;
   }
 
   void addFish(float x, float y){
@@ -951,13 +963,11 @@ class PlayerSwarm extends Swarm {
     initAcceleration.x = random(-0.7, 0.7);
     initAcceleration.y = random(-0.7, 0.7);
   
-    Fish v = new Fish(initLocation, initAcceleration, color(255, 0, 0));
-    addFish(v);
+    fishs.add(new Fish(initLocation, initAcceleration, color(255, 0, 0)));
   }
 
   int countFish(){
-//    console.log(blarg[0]);
-    return fishs.size()
+    return fishs.size();
   }
 
   color getColor(){
