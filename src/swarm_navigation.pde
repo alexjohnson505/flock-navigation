@@ -37,7 +37,7 @@ ArrayList<Ripple> ripples = new ArrayList<Ripple>();
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
 
 // Init player character
-PlayerSwarm playerSwarm = new PlayerSwarm();
+// PlayerSwarm playerSwarm = new PlayerSwarm();
 
 Food food;
 
@@ -79,9 +79,9 @@ void setup() {
 
   // Add single player fish to center
   // playerSwarm.addFish(screen.width / 4, screen.height / 2);
-  playerSwarm.addFish(200, 200);
-  playerSwarm.addFish(210, 210);
-  playerSwarm.addFish(215, 220);
+  // playerSwarm.addFish(200, 200);
+  // playerSwarm.addFish(210, 210);
+  // playerSwarm.addFish(215, 220);
 }
 
 void draw() {
@@ -91,7 +91,7 @@ void draw() {
   for (Swarm s : swarms) { s.move(); }  // Draw Swarms
 
   // Draw player swarm
-  playerSwarm.move()
+  // playerSwarm.move()
   
   food.draw(); // Draw Food
   drawHUD();   // Draw HUD
@@ -114,7 +114,7 @@ void drawHUD() {
     Swarm s = swarms.get(i); // Get current swarm
 
     renderHUDitem(s, i);
-    renderHUDitem(playerSwarm, swarms.size())
+    // renderHUDitem(playerSwarm, swarms.size())
   }
 }
 
