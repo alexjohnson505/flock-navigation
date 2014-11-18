@@ -109,36 +109,41 @@ void drawHUD() {
   for (int i = swarms.size() - 1; i >= 0; i--) {
     
     Swarm s = swarms.get(i); // Get current swarm
-    
-    int y = 25 * i + 30;  // vertical offset
-    int x = 20;           // horiontal offset
 
-    pushMatrix();
-      translate(x, y);
-  
-      // Color box
-      fill(s.getColor());
-      rect(0, -10, 20, 10);
-  
-      // Text
-      fill(255);    
-      textSize(15);
-
-      // More info:
-      // text("Swarm Score : " + s.score + " Points | " + s.fishs.size() + " Fish", 30, 0);    
-      text(s.countFish(), 30, 0); // Fish count
-  
-      // Display indicator for currently selected swarm 
-      if (s.selected) {
-        noFill();
-        stroke(2);
-        stroke(255, 255, 255);
-        rect(-5, -16, 29, 22);
-      }
-     
-    popMatrix();
-    noStroke();
+    renderHUDitem(s, i);
+    renderHUDitem(playerSwarm, swarms.size())
   }
+}
+
+void renderHUDitem(Swarm s, int i){
+  
+  int y = 25 * i + 30;  // vertical offset
+  int x = 20;           // horiontal offset
+
+  pushMatrix();
+    translate(x, y);
+
+    // Color box
+    fill(s.getColor());
+    rect(0, -10, 20, 10);
+
+    // Text
+    fill(255);    
+    textSize(15);
+
+    // More info:
+    text(s.countFish(), 30, 0);
+
+    // Display indicator for currently selected swarm 
+    if (s.selected) {
+      noFill();
+      stroke(2);
+      stroke(255, 255, 255);
+      rect(-5, -16, 29, 22);
+    }
+   
+  popMatrix();
+  noStroke();
 }
 
 void keyPressed(){
