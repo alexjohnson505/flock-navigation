@@ -175,10 +175,8 @@ void keyPressed(){
   // Control player boid
   if (key == CODED) {
     if (keyCode == RIGHT) {
-      console.log(playerSwarm.fishs.get(0));
       playerSwarm.fishs.get(0).turn(1);
     } else if (keyCode == LEFT) {
-      console.log(playerSwarm.fishs.get(0));
       playerSwarm.fishs.get(0).turn(-1);
     } 
   }
@@ -878,32 +876,6 @@ class Fish {
       return new PVector(0, 0);
     }
   }
-  
-  // Wander: implement Craig Reynolds' wandering fish behavior.
-  // fish predicts future location as a fixed distance in the 
-  // direction of its velocity, draws a circle with radius r at that 
-  // location, and picks a random point along the circumference of 
-  // the circle to use as the locaton towards which it will wander
-  // void wander() {
-    
-  //   // random point on the circle
-  //   wanderTheta += random(-wanderThetaChange, wanderThetaChange);
-    
-  //   // calculate new location to steer towards on the wander circle
-  //   PVector circleloc = velocity.get(); // start with velocity
-  //   circleloc.normalize();              // normalize to get heading
-  //   circleloc.mult(wanderDistance);     // multiply by distance
-  //   circleloc.add(location);            // make it relative to boid's location
-    
-  //   // We need to know the heading to offset wanderTheta
-  //   float h = velocity.heading2D();
-  //   PVector circleOffSet = new PVector(wanderRadius * cos(wanderTheta + h), wanderRadius * sin(wanderTheta + h));
-  //   PVector target = PVector.add(circleloc, circleOffSet);
-  //   seek(target);
-    
-  //   // Render wandering circle, etc. 
-  //   drawWanderTarget(location, circleloc, target, wanderRadius);
-  // }
 
   // applyForce: add force to current acceleration
   void applyForce(PVector force) {
@@ -932,6 +904,14 @@ class Fish {
 
   void turn(int i){
     console.log("Fish Tunrned")
+    console.log(velocity)
+    // velocity = velocity.rotate(HALF_PI * i);
+
+    v = new PVector(velocity.x, velocity.y);
+    v.rotate(HALF_PI * i * .5);
+
+    velocity = new PVector(v.x, v.y, 0);
+
   }
 };
 
