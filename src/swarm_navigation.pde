@@ -910,7 +910,7 @@ class Fish {
     v = new PVector(velocity.x, velocity.y);
     v.rotate(HALF_PI * i * .5);
 
-    velocity = new PVector(v.x, v.y, 0);
+    velocity = new PVector(v.x * 1.4, v.y * 1.4, 0);
 
   }
 };
