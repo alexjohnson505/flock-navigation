@@ -1,10 +1,8 @@
 class PlayerSwarm extends Swarm {
-  // ArrayList<Fish> fishs; 
   color c;
 
   PlayerSwarm(){
     c = color(255, 0, 0);
-    // fishs = new ArrayList<Fish>;
   }
 
   void addFish(float x, float y){

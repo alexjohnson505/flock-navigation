@@ -47,11 +47,6 @@ class Swarm {
       };
     }
 
-    if (selected){
-      // drawActiveMesh();
-      // Currently, does nothing.     
-    }
-    
     // Add a new fish for each fish that 
     // obtained food during this frame.
     while(reproducingFish.size() > 0){
@@ -79,28 +74,28 @@ class Swarm {
     }
   }
   
-  void drawActiveMesh(){
-    float prevX = 0;
-    float prevY = 0;
+  // void drawActiveMesh(){
+  //   float prevX = 0;
+  //   float prevY = 0;
     
-    for (Fish fish : fishs) {
-      float diffX = abs(prevX - fish.location.x);
-      float diffY = abs(prevY - fish.location.y);
+  //   for (Fish fish : fishs) {
+  //     float diffX = abs(prevX - fish.location.x);
+  //     float diffY = abs(prevY - fish.location.y);
       
-      boolean tooFar = diffX > 200 || diffY > 200;
+  //     boolean tooFar = diffX > 200 || diffY > 200;
       
-      // Draw a rough mesh between selected nodes
-      if (prevX != 0 || prevY != 0) {
-        if (!tooFar){
-          stroke(204, 102, 0);
-          line(prevX, prevY, fish.location.x, fish.location.y);
-        }
-      }
+  //     // Draw a rough mesh between selected nodes
+  //     if (prevX != 0 || prevY != 0) {
+  //       if (!tooFar){
+  //         stroke(204, 102, 0);
+  //         line(prevX, prevY, fish.location.x, fish.location.y);
+  //       }
+  //     }
       
-      prevX = fish.location.x;
-      prevY = fish.location.y;
-    }
-  }
+  //     prevX = fish.location.x;
+  //     prevY = fish.location.y;
+  //   }
+  // }
   
   void addFish(Fish v) {
     fishs.add(v);

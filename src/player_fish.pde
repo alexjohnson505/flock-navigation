@@ -1,14 +1,14 @@
 
-class PlayerFish extends Fish {
+// class PlayerFish extends Fish {
 
 
-  PlayerFish(){
+//   PlayerFish(){
 
-  }
+//   }
 
-  void turn(int i){
-    console.log("Turning");
-  }
+//   void turn(int i){
+//     console.log("Turning");
+//   }
 
-};
+// };
 

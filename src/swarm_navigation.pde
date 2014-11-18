@@ -19,7 +19,7 @@
 
 // Press 'W' & 'S' to change the currently selected
 // swarm. Notice how a white box is drawn around their
-// color in the top left of the screen. Press 'D' to 
+// color in the top left owf the screen. Press 'D' to 
 // grant extra fish to the currently selected swarm
 
 /********************************/
@@ -174,10 +174,14 @@ void keyPressed(){
   // Check for arrow keys
   // Control player boid
   if (key == CODED) {
+    
+    // Get first fish of first swarm
+    f = swarms.get(0).fishs.get(0);
+
     if (keyCode == RIGHT) {
-      playerSwarm.fishs.get(0).turn(1);
+      f.turn(1);
     } else if (keyCode == LEFT) {
-      playerSwarm.fishs.get(0).turn(-1);
+      f.turn(-1);
     } 
   }
 };

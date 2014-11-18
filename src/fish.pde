@@ -38,6 +38,8 @@ class Fish {
   float damping = 100;           // arrival damping in pixels
   float neighborDistance = 50;   // cohesion variables
 
+  boolean player;                // Is this fish player controlled?
+
   /***************************
       WANDER SETTINGS
    ***************************/
@@ -111,6 +113,8 @@ class Fish {
   // More information: http://www.red3d.com/cwr/boids/
   
   void flock(ArrayList < Fish > fishs) {
+
+    if (player) return;
     
     PVector separationForce = separation(fishs); //  1.) Seperation
     PVector alignmentForce = alignment(fishs);   //  2.) Alighment
@@ -386,15 +390,33 @@ class Fish {
     dangerLevel = 255;
   }
 
+  // Player controlled movement
   void turn(int i){
-    console.log("Fish Tunrned")
-    console.log(velocity)
-    // velocity = velocity.rotate(HALF_PI * i);
 
+    // If player initializes movement, set
+    // the selected boid to "player". If
+    // player = true, then the boid will take
+    // less influence from neighbors
+    player = true;
+
+    pushMatrix();
+      noFill();
+      strokeWeight(2);
+      stroke(204, 102, 0);
+      ellipse(location.x, location.y, 50, 50);
+    popMatrix();
+
+    // Create 2D PVectory. Apply rotate
     v = new PVector(velocity.x, velocity.y);
     v.rotate(HALF_PI * i * .5);
 
+    // Convert 2D PVector into 3D
     velocity = new PVector(v.x * 1.4, v.y * 1.4, 0);
+
+  }
+  
+  // Player controlled acceleration
+  void accelerate(int i){
 
   }
 };
