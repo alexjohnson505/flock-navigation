@@ -399,16 +399,11 @@ class Fish {
     // less influence from neighbors
     player = true;
 
-    pushMatrix();
-      noFill();
-      strokeWeight(2);
-      stroke(204, 102, 0);
-      ellipse(location.x, location.y, 50, 50);
-    popMatrix();
+    debug(location.x, location.y);
 
     // Create 2D PVectory. Apply rotate
     v = new PVector(velocity.x, velocity.y);
-    v.rotate(HALF_PI * i * .5);
+    v.rotate(HALF_PI * i * .2);
 
     // Convert 2D PVector into 3D
     velocity = new PVector(v.x * 1.4, v.y * 1.4, 0);
@@ -417,6 +412,27 @@ class Fish {
   
   // Player controlled acceleration
   void accelerate(int i){
+    player = true;
+    debug(location.x, location.y);
+
+    // var scale = i * 2;
+    scale = 10;
+
+    // Convert 2D PVector into 3D. Scale acceleration
+    acceleration = new PVector(acceleration.x + scale, acceleration.y + scale, 0);
+
+    console.log(acceleration);
+  }
+
+  // Print data about a specific boid
+  void debug(float x, float y){
+
+    pushMatrix();
+      noFill();
+      strokeWeight(2);
+      stroke(204, 102, 0);
+      ellipse(location.x, location.y, 50, 50);
+    popMatrix();
 
   }
 };

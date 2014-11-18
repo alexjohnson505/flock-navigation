@@ -182,7 +182,11 @@ void keyPressed(){
       f.turn(1);
     } else if (keyCode == LEFT) {
       f.turn(-1);
-    } 
+    } else if (keyCode == UP){
+      f.accelerate(1);
+    } else if (keyCode == DOWN){
+      f.accelerate(-1);
+    }
   }
 };
 
