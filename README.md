@@ -60,6 +60,7 @@ TO-DO:
 > features that I plan to implement.
 
 "Improvements"
+- UP/DOWN arrows should control speed
 - Swarms should avoid collisions with each other.
 - *** Tweak Parameters via HTML/JS UI
 - Section/Quadrant boids for efficiency

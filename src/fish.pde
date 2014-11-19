@@ -382,18 +382,6 @@ class Fish {
     // Note: add mass here if you want acceleration = force / mass
     acceleration.add(force);
   }
-
-  // drawWanderTarget: draw the circle associated with wandering
-  // void drawWanderTarget(PVector location, PVector circle, PVector target, float rad) {
-  //   console.log("hey");
-  //   stroke(188, 188, 255);
-    
-  //   ellipseMode(CENTER);
-  //   ellipse(circle.x, circle.y, rad * 2, rad * 2);
-  //   ellipse(target.x, target.y, 4, 4);
-  //   line(location.x, location.y, circle.x, circle.y);
-  //   line(circle.x, circle.y, target.x, target.y);
-  // }
   
   // Fish eats. It's now full, and we can 
   // reset it's danger level
@@ -422,22 +410,19 @@ class Fish {
   }
   
   // Player controlled acceleration
-  // TODO: Make it work
   void accelerate(int i){
     player = true;
+    
+    // Let user go a little faster
+    maxSpeed = 3;
+
     debug(location.x, location.y);
-
-    // var scale = i * 2;
-    scale = 10;
-
-    // Convert 2D PVector into 3D. Scale acceleration
-    acceleration = new PVector(acceleration.x + scale, acceleration.y + scale, 0);
-
-    console.log(acceleration);
+    velocity.mult(1.0 + (i * .2));
   }
 
   // Print data about a specific boid
   void debug(float x, float y){
+    
 
     pushMatrix();
       noFill();
