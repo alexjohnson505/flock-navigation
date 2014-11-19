@@ -33,7 +33,7 @@ Running:
 Load src/index.html from a web server. To run locally, I 
 recommend installing MAMP, and pointing the root directory 
 to swarm-navigation/src. This sets up a local, development 
-Apache server. You can then load the project from locahost:8888.
+Apache server. You can then load the project from locahost:8080.
 
 User Interaction:
 -------------
@@ -64,6 +64,8 @@ TO-DO:
 - *** Tweak Parameters via HTML/JS UI
 - Section/Quadrant boids for efficiency
 - *** "Survival Mode" -> Introduce new swarms as swarms go extinct
+- support 'keyHeld...'
+- support tighter navigation to follow player
 
 Special Thanks:
 -------------

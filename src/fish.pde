@@ -260,11 +260,11 @@ class Fish {
 
     // Check proximity for ALL fish
     for (int i = swarms.size() - 1; i >= 0; i--) {
-      Swarm fish = swarms.get(i);
+      Swarm swarm = swarms.get(i);
     
       // Iterate through fish
-      for (int j = fish.fishs.size() - 1; j >= 0; j--){
-        Fish other = fish.fishs.get(j);
+      for (int j = swarm.fishs.size() - 1; j >= 0; j--){
+        Fish other = swarm.fishs.get(j);
 
         float d = PVector.dist(location, other.location);
         
@@ -276,7 +276,7 @@ class Fish {
           diff.normalize();
           diff.div(d); // Weight by distance
           sum.add(diff);
-          count
+          // count TODO
         }
       }
     }
