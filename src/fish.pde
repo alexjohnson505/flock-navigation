@@ -59,8 +59,6 @@ class Fish {
 
   // Construction: Fish (location_vector, acceleration_vector, color)
   Fish(PVector l, PVector a, color c) {
-
-    // use default r, maxSpeed, maxForce
     myColor = c;
     location = new PVector(l.x, l.y);
     acceleration = new PVector(a.x, a.y);
@@ -78,7 +76,7 @@ class Fish {
   // Update: location & acceleration
   void update() {
     velocity.add(acceleration); // update velocity
-    velocity.limit(maxSpeed);   // limit speed
+    velocity.limit((player) ? 2 : maxSpeed);   // limit speed (let players go faster)
     location.add(velocity);     // add velocity to location
     acceleration.mult(0);       // reset acceleration to 0 each cycle
   }
@@ -405,16 +403,13 @@ class Fish {
     v.rotate(HALF_PI * i * .2);
 
     // Convert 2D PVector into 3D
-    velocity = new PVector(v.x * 1.4, v.y * 1.4, 0);
+    velocity = new PVector(v.x, v.y, 0);
 
   }
   
   // Player controlled acceleration
   void accelerate(int i){
     player = true;
-    
-    // Let user go a little faster
-    maxSpeed = 3;
 
     debug(location.x, location.y);
     velocity.mult(1.0 + (i * .2));
