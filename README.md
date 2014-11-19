@@ -30,6 +30,8 @@ Online: [alexjohnson.io/swarm-navigation](http://alexjohnson.io/swarm-navigation
 Running:
 -------------
 
+> Running swarm-navigation on your computer
+
 Load src/index.html from a web server. To run locally, I 
 recommend installing MAMP, and pointing the root directory 
 to swarm-navigation/src. This sets up a local, development 
@@ -37,6 +39,8 @@ Apache server. You can then load the project from locahost:8080.
 
 User Interaction:
 -------------
+
+> How to Play
 
 Swarms navigate the environment. When a fish
 collects a food, they reproduce, and their health
@@ -56,16 +60,13 @@ selected swarm.
 TO-DO:
 -------------
 
-> This file exists as a reminder of
-> features that I plan to implement.
+> Upcoming Features:
 
 "Improvements"
-- Swarms should avoid collisions with each other.
-- *** Tweak Parameters via HTML/JS UI
-- Section/Quadrant boids for efficiency
-- *** "Survival Mode" -> Introduce new swarms as swarms go extinct
-- support 'keyHeld...'
-- support tighter navigation to follow player
+- Swarms should respect/avoid collisions with other swarms
+- Optimize Code: Section off boids to avoid unnecessary collision detection
+- Better User Input: Support holding down arrow keys
+- Followers: Boids should follow player boid more tightly
 
 Special Thanks:
 -------------
