@@ -76,12 +76,6 @@ void setup() {
       s.addFish(random(0, screen.width), random(screen.height));
     }
   } 
-
-  // Add single player fish to center
-  // playerSwarm.addFish(screen.width / 4, screen.height / 2);
-  // playerSwarm.addFish(200, 200);
-  // playerSwarm.addFish(210, 210);
-  // playerSwarm.addFish(215, 220);
 }
 
 void draw() {
@@ -89,9 +83,6 @@ void draw() {
   
   for (Ripple r : ripples){ r.draw(); } // Draw Ripples
   for (Swarm s : swarms) { s.move(); }  // Draw Swarms
-
-  // Draw player swarm
-  // playerSwarm.move()
   
   food.draw(); // Draw Food
   drawHUD();   // Draw HUD
@@ -114,7 +105,6 @@ void drawHUD() {
     Swarm s = swarms.get(i); // Get current swarm
 
     renderHUDitem(s, i);
-    // renderHUDitem(playerSwarm, swarms.size())
   }
 }
 
