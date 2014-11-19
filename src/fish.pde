@@ -54,8 +54,8 @@ class Fish {
    ***************************/
    
   float separationWeight = 3; // (default) 1.5
-  float alignmentWeight = 1;
-  float cohesionWeight = 2;
+  float alignmentWeight = 2;  // (default) 1.0
+  float cohesionWeight = 2;   // (default) 1.0
 
   // Construction: Fish (location_vector, acceleration_vector, color)
   Fish(PVector l, PVector a, color c) {
@@ -323,7 +323,7 @@ class Fish {
     
     for (Fish other: fishs) {
       float d = PVector.dist(location, other.location);
-      if ((d > 0) && (d < neighborDistance)) {
+      if ((d > 0) && (d < getNeighborDistance())) {
         sum.add(other.velocity);
         count++;
       }
@@ -352,7 +352,7 @@ class Fish {
 
     for (Fish other: fishs) {
       float d = PVector.dist(location, other.location);
-      if ((d > 0) && (d < neighborDistance)) {
+      if ((d > 0) && (d < getNeighborDistance())) {
         sum.add(other.location); // Add location
         count++;
       }
@@ -362,6 +362,17 @@ class Fish {
       return seeking(sum); // Steer towards the location
     } else {
       return new PVector(0, 0);
+    }
+  }
+
+  // Boids are more likely to recognize player
+  //as a neighbor to respect.
+  float getNeighborDistance(){
+    // TODO: Calclulate, add a little sal for player character
+    if (player){
+      return neighborDistance * 3;
+    } else {
+      return neighborDistance;
     }
   }
 
@@ -411,6 +422,7 @@ class Fish {
   }
   
   // Player controlled acceleration
+  // TODO: Make it work
   void accelerate(int i){
     player = true;
     debug(location.x, location.y);
