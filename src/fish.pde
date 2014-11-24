@@ -335,15 +335,17 @@ class Fish {
     for (Fish other : fishs) {
       float d = PVector.dist(location, other.location);
 
-      if ((d > 0) && (d < getNeighborDistance(other.player))) {
+      if ((d > 0) && (d < getNeighborDistance(other))) {
         sum.add(other.velocity);  
         count++;
 
         if (other.player) {
-          console.log("near player");
           nearPlayer = true;
-        }
 
+          sum = new PVector(0, 0);
+          sum.add(other.velocity);  
+          count = 1;
+        }
       }
     }
     
@@ -371,7 +373,7 @@ class Fish {
 
     for (Fish other: fishs) {
       float d = PVector.dist(location, other.location);
-      if ((d > 0) && (d < getNeighborDistance(other.player))) {
+      if ((d > 0) && (d < getNeighborDistance(other))) {
         sum.add(other.location);
         count++;
       }
@@ -386,10 +388,21 @@ class Fish {
   }
 
   // Boids are more likely to recognize player
-  //as a neighbor to respect.
-  float getNeighborDistance(nextToPlayer){
-    if (nextToPlayer){
+  // as a neighbor to respect.
+  float getNeighborDistance(other){
+    
+    // If other boid is the player, allow
+    // for a much farther distance leniency
+    if (other.player){
       return neighborDistance * 2;
+    
+    // If other boid is near the player,
+    // slightly increase distance leniency
+    } if (other.nearPlayer) {
+      return neighborDistance * 1.5;
+    
+    // If boid is no where near a player,
+    // return the normal distance threshold
     } else {
       return neighborDistance;
     }
