@@ -87,10 +87,6 @@ class Fish {
     float theta = velocity.heading2D() + radians(90);
     
     dangerLevel = dangerLevel - decayRate;
-   
-  
-    
-    
 
     // if (player){
     //   stroke(myColor);
@@ -116,8 +112,6 @@ class Fish {
       fill(0, dangerLevel);
     }
     
-
-
     pushMatrix();
       translate(location.x, location.y);
       rotate(theta);
