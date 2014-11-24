@@ -39,6 +39,7 @@ class Fish {
   float neighborDistance = 50;   // cohesion variables
 
   boolean player;                // Is this fish player controlled?
+  boolean nearPlayer;            // Is this fish near a player controlled fish?
 
   /***************************
       WANDER SETTINGS
@@ -76,7 +77,7 @@ class Fish {
   // Update: location & acceleration
   void update() {
     velocity.add(acceleration); // update velocity
-    velocity.limit((player) ? 2 : maxSpeed);   // limit speed (let players go faster)
+    velocity.limit((player) ? 2.2 : maxSpeed);   // limit speed (let players go faster)
     location.add(velocity);     // add velocity to location
     acceleration.mult(0);       // reset acceleration to 0 each cycle
   }
@@ -88,17 +89,27 @@ class Fish {
     dangerLevel = dangerLevel - decayRate;
    
     fill(myColor, dangerLevel);
-    noStroke();
+
+    if (player || nearPlayer){
+      stroke(255);
+      strokeWeight(2);
+    } else {
+      noStroke();  
+    }
+    
 
     pushMatrix();
       translate(location.x, location.y);
       rotate(theta);
       beginShape();
+
       vertex(0, -r * 2);
       vertex(-r, r * 2);
       vertex(r, r * 2);
       endShape(CLOSE);
     popMatrix();
+
+    noStroke();
   }
 
   // --------------------------------------------------------------------
@@ -318,12 +329,21 @@ class Fish {
     // neighborDistance defined as an instance variable
     PVector sum = new PVector(0, 0);
     int count = 0;
+
+    nearPlayer = false;
     
-    for (Fish other: fishs) {
+    for (Fish other : fishs) {
       float d = PVector.dist(location, other.location);
+
       if ((d > 0) && (d < getNeighborDistance())) {
-        sum.add(other.velocity);
+        sum.add(other.velocity);  
         count++;
+
+        if (other.player) {
+          console.log("near player");
+          nearPlayer = true;
+        }
+
       }
     }
     
@@ -332,8 +352,9 @@ class Fish {
       sum.div((float) count);
       sum.normalize();
       sum.mult(maxSpeed);
-      PVector steer = PVector.sub(sum, velocity);
+      PVector steer = PVector.sub(sum, velocity);      
       steer.limit(maxForce);
+
       return steer;
     } else {
       return new PVector(0, 0);
@@ -351,10 +372,11 @@ class Fish {
     for (Fish other: fishs) {
       float d = PVector.dist(location, other.location);
       if ((d > 0) && (d < getNeighborDistance())) {
-        sum.add(other.location); // Add location
+        sum.add(other.location);
         count++;
       }
     }
+
     if (count > 0) {
       sum.div(count);
       return seeking(sum); // Steer towards the location
@@ -368,7 +390,7 @@ class Fish {
   float getNeighborDistance(){
     // TODO: Calclulate, add a little sal for player character
     if (player){
-      return neighborDistance * 3;
+      return neighborDistance; // * 3;
     } else {
       return neighborDistance;
     }
