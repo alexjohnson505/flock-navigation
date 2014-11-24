@@ -345,6 +345,8 @@ class Fish {
           sum = new PVector(0, 0);
           sum.add(other.velocity);  
           count = 1;
+
+          break;
         }
       }
     }
