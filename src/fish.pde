@@ -335,7 +335,7 @@ class Fish {
     for (Fish other : fishs) {
       float d = PVector.dist(location, other.location);
 
-      if ((d > 0) && (d < getNeighborDistance())) {
+      if ((d > 0) && (d < getNeighborDistance(other.player))) {
         sum.add(other.velocity);  
         count++;
 
@@ -371,7 +371,7 @@ class Fish {
 
     for (Fish other: fishs) {
       float d = PVector.dist(location, other.location);
-      if ((d > 0) && (d < getNeighborDistance())) {
+      if ((d > 0) && (d < getNeighborDistance(other.player))) {
         sum.add(other.location);
         count++;
       }
@@ -387,10 +387,9 @@ class Fish {
 
   // Boids are more likely to recognize player
   //as a neighbor to respect.
-  float getNeighborDistance(){
-    // TODO: Calclulate, add a little sal for player character
-    if (player){
-      return neighborDistance; // * 3;
+  float getNeighborDistance(nextToPlayer){
+    if (nextToPlayer){
+      return neighborDistance * 2;
     } else {
       return neighborDistance;
     }
