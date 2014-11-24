@@ -66,7 +66,7 @@ void setup() {
   food = new Food();
 
   // Hard-code pastel colors for swarms
-  ArrayList<color> colors = [#016f94, #75bfc2, #b3d88b, #fdda7c, #fab567, #f2635d];
+  ArrayList<color> colors = [#f2635d,#fab567,#fdda7c,#b3d88b,#75bfc2,#016f94];
 
   // Init NPC Swarms 
   for (int i = startSwarms; i > 0; i--) {
@@ -76,7 +76,6 @@ void setup() {
   // Init Start Fish
   for (Swarm s : swarms) {
     for (int i = startFish; i > 0; i--) {
-      // Start top right
       s.addFish(random(0, screen.width), random(screen.height));
     }
   } 

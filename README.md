@@ -63,9 +63,8 @@ TO-DO:
 > Upcoming Features:
 
 "Improvements"
-- Swarm color choices should be hard-coded.
-- Better User Input: Support holding down arrow keys
 - Followers: Boids should follow player boid more tightly
+- Better User Input: Support holding down arrow keys
 - Swarms should respect/avoid collisions with other swarms
 - Optimize Code: Section off boids to avoid unnecessary collision detection
 
