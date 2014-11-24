@@ -14,9 +14,11 @@ class Swarm {
   int score;
   boolean selected;  
   
-  Swarm() {
+  Swarm(color c_) {
+    // console.log(c_);
+
     fishs = new ArrayList<Fish>();
-    c = makeNeonColor();
+    c = c_;
     score = startFish;
     selected = false;
   }

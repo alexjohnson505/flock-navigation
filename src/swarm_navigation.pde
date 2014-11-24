@@ -45,7 +45,7 @@ Food food;
      EDITABLE PARAMETERS
  *******************************/
 
-int startSwarms = 3;   // Starting Swarms
+int startSwarms = 4;   // Starting Swarms
 int startFish   = 30;  // Initial fish per swarm
 
 // Rate of food regeneration
@@ -60,13 +60,17 @@ float decayRate = 0.1;
 
 void setup() {
 
-  size(screen.width, screen.height);
+  // size(screen.width, screen.height);
+  size(1000, 500);
   
   food = new Food();
 
+  // Hard-code pastel colors for swarms
+  ArrayList<color> colors = [#016f94, #75bfc2, #b3d88b, #fdda7c, #fab567, #f2635d];
+
   // Init NPC Swarms 
   for (int i = startSwarms; i > 0; i--) {
-    swarms.add(new Swarm());
+    swarms.add(new Swarm(colors[i]));
   }
 
   // Init Start Fish
