@@ -88,20 +88,44 @@ class Fish {
     
     dangerLevel = dangerLevel - decayRate;
    
-    fill(myColor, dangerLevel);
+  
+    
+    
 
-    if (player || nearPlayer){
-      stroke(255);
-      strokeWeight(2);
+    // if (player){
+    //   stroke(myColor);
+    //   strokeWeight(2);
+    //   fill(0, dangerLevel);
+    // } else if (nearPlayer){
+    //   stroke(255);
+    //   strokeWeight(2);
+    //   fill(myColor, dangerLevel);
+    // } else {
+    //   noStroke();  
+    //   fill(myColor, dangerLevel);
+    // }
+
+    strokeWeight(2);
+    stroke(myColor, dangerLevel);
+
+    if (player){
+      fill(myColor, dangerLevel);
+    } else if (nearPlayer){
+      fill(myColor, dangerLevel);
     } else {
-      noStroke();  
+      fill(0, dangerLevel);
     }
     
+
 
     pushMatrix();
       translate(location.x, location.y);
       rotate(theta);
       beginShape();
+
+      if (player){
+        r = 9;
+      };
 
       vertex(0, -r * 2);
       vertex(-r, r * 2);

@@ -60,8 +60,8 @@ float decayRate = 0.1;
 
 void setup() {
 
-  // size(screen.width, screen.height);
-  size(1000, 500);
+  size(screen.width, screen.height);
+  // size(1000, 500);
   
   food = new Food();
 

@@ -15,8 +15,6 @@ class Swarm {
   boolean selected;  
   
   Swarm(color c_) {
-    // console.log(c_);
-
     fishs = new ArrayList<Fish>();
     c = c_;
     score = startFish;
