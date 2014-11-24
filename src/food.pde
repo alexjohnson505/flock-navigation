@@ -44,13 +44,13 @@ class Food {
     float y = random(0, height);
     
     food.add(new PVector(x, y));
-    ripples.add(new Ripple(x, y, color(255)));
+    ripples.add(new Ripple(x, y, color(90)));
   }
 
   // Add new target to list
   void addFood(float x, float y){
     food.add(new PVector(x, y));
-    ripples.add(new Ripple(x, y, color(255)));
+    ripples.add(new Ripple(x, y, color(90)));
   }
   
   void remove(int index){
