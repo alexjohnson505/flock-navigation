@@ -454,7 +454,7 @@ class Fish {
 
     // Create 2D PVectory. Apply rotate
     v = new PVector(velocity.x, velocity.y);
-    v.rotate(HALF_PI * i * .2);
+    v.rotate(HALF_PI * i * .025);
 
     // Convert 2D PVector into 3D
     velocity = new PVector(v.x, v.y, 0);

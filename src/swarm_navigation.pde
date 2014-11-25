@@ -58,10 +58,13 @@ int foodRegenThreshold = 15;
 // tick of not eating.
 float decayRate = 0.1;
 
+// Accumulate momentum when turning
+float turnMomentum = 1;
+
 void setup() {
 
-  size(screen.width, screen.height);
-  // size(1000, 500);
+  // size(screen.width, screen.height);
+  size(1000, 500);
   
   food = new Food();
 
@@ -150,19 +153,6 @@ void keyPressed(){
   if (key == 'w'){
     changeSelected(-1);
   }
-  
-  // if (key == 'd'){
-  //    int i = selectedSwarmIndex();
-  //    Swarm s = swarms.get(i);
-     
-  //    s.score += -10;
-
-  //    int x = screen.width / 4;
-  //    int y = screen.height / 4;
-
-  //    s.addFish(x, y);
-  //    ripples.add(new Ripple(x, y, s.c));
-  // }
 
   // Check for arrow keys
   // Control player boid
@@ -171,17 +161,24 @@ void keyPressed(){
     // Get first fish of first swarm
     f = swarms.get(0).fishs.get(0);
 
+    turnMomentum += .2;
+
     if (keyCode == RIGHT) {
-      f.turn(1);
+      f.turn(1 * turnMomentum);
     } else if (keyCode == LEFT) {
-      f.turn(-1);
+      f.turn(-1 * turnMomentum);
     } else if (keyCode == UP){
-      f.accelerate(1);
+      f.accelerate(1 * turnMomentum);
     } else if (keyCode == DOWN){
-      f.accelerate(-1);
+      f.accelerate(-1 * turnMomentum);
     }
   }
 };
+
+void keyReleased(){
+  turnMomentum = 1;
+
+}
 
 // Change the current 'active' swarm
 void changeSelected(int x){
