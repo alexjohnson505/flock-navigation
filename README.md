@@ -19,10 +19,6 @@ following quote is from Craig Reynold’s online writings on boids:
 > behavior… and ordered … behavior. This fits with Langton's 1990 observation that life-like
 > phenomena exist poised at the edge of chaos.” ([source](http://www.red3d.com/cwr/boids/))
 
-Read More:
--------------
-To read more about Flocking Behaviour, please refer to this project's [Background Documentation](https://github.com/alexjohnson505/swarm-navigation/tree/master/documentation)
-
 Demo:
 -------------
 Online: [alexjohnson.io/swarm-navigation](http://alexjohnson.io/swarm-navigation)
@@ -55,7 +51,7 @@ swarm. Notice how a white box is drawn around their
 color in the top left of the screen.
 
 TO-DO:
--------------
+___
 
 > Upcoming Features:
 
@@ -63,6 +59,27 @@ TO-DO:
 - Swarms should respect/avoid collisions with other swarms
 - Optimize Code: Section off boids to avoid unnecessary collision detection
 
+
+Boids
+___
+
+This project is inspired by [Craig Reynolds](http://www.red3d.com/cwr/index.html)' research in modeling flocking behaviour. Reynolds was influenced by the animal motions of flocks such as birds, or fish schools. Reynolds referred to his generic [simulated flocking creatures as Boids](http://www.red3d.com/cwr/boids/).
+
+To quote Craig Reynolds, 
+
+> In 1986 I made a computer model of coordinated animal 
+> motion such as bird flocks and fish schools. It was based 
+> on three dimensional computational geometry of the sort 
+> normally used in computer animation or computer aided design.
+> I called the generic simulated flocking creatures boids. 
+> The basic flocking model consists of three simple [steering behaviors](http://www.red3d.com/cwr/steer/) 
+> which describe how an individual boid maneuvers based on 
+> the positions and velocities its nearby flockmates ([source](http://www.red3d.com/cwr/boids/)).
+
+Boids operate on 3 main principles:
+ - **Separation**: Avoid crowding flockmates.
+ - **Alignment**: Aim for average heading of flockmates.
+ - **Cohesion**: Aim for average position of flockmates.
 
 Special Thanks:
 -------------
