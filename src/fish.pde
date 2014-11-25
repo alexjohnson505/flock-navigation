@@ -389,7 +389,7 @@ class Fish {
     // less influence from neighbors
     player = true;
 
-    debug(location.x, location.y);
+    // debug(location.x, location.y);
 
     // Create 2D PVectory. Apply rotate
     v = new PVector(velocity.x, velocity.y);
@@ -404,7 +404,7 @@ class Fish {
   void accelerate(int i){
     player = true;
 
-    debug(location.x, location.y);
+    // debug(location.x, location.y);
     velocity.mult(1.0 + (i * .2));
   }
 

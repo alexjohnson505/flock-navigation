@@ -56,6 +56,7 @@ Upcoming Features:
 > Upcoming Features:
 
 - Optimize Code: Section off boids to avoid unnecessary collision detection
+- Read, comment, and cleanup code
 
 
 Boids

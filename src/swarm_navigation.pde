@@ -46,7 +46,7 @@ Food food;
  *******************************/
 
 int startSwarms = 4;   // Starting Swarms
-int startFish   = 30;  // Initial fish per swarm
+int startFish   = 20;  // Initial fish per swarm
 
 // Rate of food regeneration
 // (default) 20 game ticks per new food;
