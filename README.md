@@ -50,13 +50,11 @@ Hold 'W' & 'S' to change the currently selected
 swarm. Notice how a white box is drawn around their
 color in the top left of the screen.
 
-TO-DO:
+Upcoming Features:
 -------------
 
 > Upcoming Features:
 
-"Improvements"
-- Swarms should respect/avoid collisions with other swarms
 - Optimize Code: Section off boids to avoid unnecessary collision detection
 
 

@@ -234,22 +234,34 @@ class Fish {
     float desiredseparation = 35.0f;
     PVector steer = new PVector(0, 0, 0);
     int count = 0;
+
+    // Check proximity for ALL fish
+    for (int i = swarms.size() - 1; i >= 0; i--) {
+      Swarm swarm = swarms.get(i);
     
-    // Check proximity for fish in swarm
-    for (Fish other: fishs) {
-      
-      float d = PVector.dist(location, other.location);
-     
-      // Find targets within range
-      // Note: 0 = distance to self.
-      if ((d > 0) && (d < desiredseparation)) {
+      // Iterate through fish
+      for (int j = swarm.fishs.size() - 1; j >= 0; j--){
         
-        // Calculate vector pointing away from neighbor
-        PVector diff = PVector.sub(location, other.location);
-        diff.normalize();
-        diff.div(d); // weight by distance
-        steer.add(diff);
-        count++; // keep track of how many
+        // Compare to 'other' fish
+        Fish other = swarm.fishs.get(j);
+
+        // Caculate distance
+        float d = PVector.dist(location, other.location);
+        
+        // If the distance is greater than 0 and less than 
+        // an arbitrary amount (0 when you are yourself)
+        if ((d > 0) && (d < desiredseparation)) {
+          
+          // Calculate vector pointing away from neighbor
+          PVector diff = PVector.sub(location, other.location);
+
+          diff.normalize();
+          
+          diff.div(d); // Weight by distance
+          
+          steer.add(diff);
+          count++;
+        }
       }
     }
     
@@ -267,50 +279,6 @@ class Fish {
     }
     return steer;
   }
-
-  // Seperate: Check nearby fishs. Apply force to steer away
-  // void separate(ArrayList < Fish > fishs) {
-    
-  //   console.log("WHAT");
-
-  //   float desiredseparation = r * 1.5;
-
-  //   PVector sum = new PVector();
-    
-  //   int count = 0;
-
-  //   // Check proximity for ALL fish
-  //   // for (int i = swarms.size() - 1; i >= 0; i--) {
-  //   //   Swarm swarm = swarms.get(i);
-    
-  //   //   // Iterate through fish
-  //   //   for (int j = swarm.fishs.size() - 1; j >= 0; j--){
-        
-  //   //     // Compare to 'other' fish
-  //   //     Fish other = swarm.fishs.get(j);
-
-  //   //     // Caculate distance
-  //   //     float d = PVector.dist(location, other.location);
-        
-  //   //     // If the distance is greater than 0 and less than 
-  //   //     // an arbitrary amount (0 when you are yourself)
-  //   //     if ((d > 0) && (d < desiredseparation)) {
-          
-  //   //       // Calculate vector pointing away from neighbor
-  //   //       PVector diff = PVector.sub(location, other.location);
-
-  //   //       diff.normalize();
-          
-  //   //       diff.div(d); // Weight by distance
-          
-  //   //       sum.add(diff);
-  //   //       count++;
-  //   //       // count TODO
-  //   //     }
-  //   //   }
-  //   // }
-
-  // }
 
   // Alignment: Average velocity of nearby fishs
   PVector alignment(ArrayList < Fish > fishs) {
