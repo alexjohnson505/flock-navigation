@@ -50,12 +50,9 @@ eating, they will fade away and die (yellow ripple).
 Click on the screen to place a new food item
 at the center of your cursor.
 
-Press 'W' & 'S' to change the currently selected
+Hold 'W' & 'S' to change the currently selected
 swarm. Notice how a white box is drawn around their
 color in the top left of the screen.
-
-Press 'D' to grant extra fish to the currently
-selected swarm.
 
 TO-DO:
 -------------
