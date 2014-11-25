@@ -63,7 +63,6 @@ TO-DO:
 > Upcoming Features:
 
 "Improvements"
-- Better User Input: Support holding down arrow keys
 - Swarms should respect/avoid collisions with other swarms
 - Optimize Code: Section off boids to avoid unnecessary collision detection
 
