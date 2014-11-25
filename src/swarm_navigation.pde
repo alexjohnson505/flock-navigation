@@ -19,7 +19,7 @@
 
 // Press 'W' & 'S' to change the currently selected
 // swarm. Notice how a white box is drawn around their
-// color in the top left of the screen. Press 'D' to 
+// color in the top left owf the screen. Press 'D' to 
 // grant extra fish to the currently selected swarm
 
 /********************************/
@@ -37,7 +37,7 @@ ArrayList<Ripple> ripples = new ArrayList<Ripple>();
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
 
 // Init player character
-PlayerSwarm playerSwarm = new PlayerSwarm();
+// PlayerSwarm playerSwarm = new PlayerSwarm();
 
 Food food;
 
@@ -45,7 +45,7 @@ Food food;
      EDITABLE PARAMETERS
  *******************************/
 
-int startSwarms = 3;   // Starting Swarms
+int startSwarms = 4;   // Starting Swarms
 int startFish   = 30;  // Initial fish per swarm
 
 // Rate of food regeneration
@@ -61,27 +61,24 @@ float decayRate = 0.1;
 void setup() {
 
   size(screen.width, screen.height);
+  // size(1000, 500);
   
   food = new Food();
 
+  // Hard-code pastel colors for swarms
+  ArrayList<color> colors = [#f2635d,#fab567,#fdda7c,#b3d88b,#75bfc2,#016f94];
+
   // Init NPC Swarms 
   for (int i = startSwarms; i > 0; i--) {
-    swarms.add(new Swarm());
+    swarms.add(new Swarm(colors[i]));
   }
 
   // Init Start Fish
   for (Swarm s : swarms) {
     for (int i = startFish; i > 0; i--) {
-      // Start top right
       s.addFish(random(0, screen.width), random(screen.height));
     }
   } 
-
-  // Add single player fish to center
-  // playerSwarm.addFish(screen.width / 4, screen.height / 2);
-  playerSwarm.addFish(200, 200);
-  playerSwarm.addFish(210, 210);
-  playerSwarm.addFish(215, 220);
 }
 
 void draw() {
@@ -89,9 +86,6 @@ void draw() {
   
   for (Ripple r : ripples){ r.draw(); } // Draw Ripples
   for (Swarm s : swarms) { s.move(); }  // Draw Swarms
-
-  // Draw player swarm
-  playerSwarm.move()
   
   food.draw(); // Draw Food
   drawHUD();   // Draw HUD
@@ -114,7 +108,6 @@ void drawHUD() {
     Swarm s = swarms.get(i); // Get current swarm
 
     renderHUDitem(s, i);
-    renderHUDitem(playerSwarm, swarms.size())
   }
 }
 
@@ -174,11 +167,19 @@ void keyPressed(){
   // Check for arrow keys
   // Control player boid
   if (key == CODED) {
+    
+    // Get first fish of first swarm
+    f = swarms.get(0).fishs.get(0);
+
     if (keyCode == RIGHT) {
-      playerSwarm.fishs.get(0).turn(1);
+      f.turn(1);
     } else if (keyCode == LEFT) {
-      playerSwarm.fishs.get(0).turn(-1);
-    } 
+      f.turn(-1);
+    } else if (keyCode == UP){
+      f.accelerate(1);
+    } else if (keyCode == DOWN){
+      f.accelerate(-1);
+    }
   }
 };
 

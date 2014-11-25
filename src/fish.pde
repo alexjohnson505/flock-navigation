@@ -38,6 +38,9 @@ class Fish {
   float damping = 100;           // arrival damping in pixels
   float neighborDistance = 50;   // cohesion variables
 
+  boolean player;                // Is this fish player controlled?
+  boolean nearPlayer;            // Is this fish near a player controlled fish?
+
   /***************************
       WANDER SETTINGS
    ***************************/
@@ -52,13 +55,11 @@ class Fish {
    ***************************/
    
   float separationWeight = 3; // (default) 1.5
-  float alignmentWeight = 1;
-  float cohesionWeight = 2;
+  float alignmentWeight = 2;  // (default) 1.0
+  float cohesionWeight = 2;   // (default) 1.0
 
   // Construction: Fish (location_vector, acceleration_vector, color)
   Fish(PVector l, PVector a, color c) {
-
-    // use default r, maxSpeed, maxForce
     myColor = c;
     location = new PVector(l.x, l.y);
     acceleration = new PVector(a.x, a.y);
@@ -76,7 +77,7 @@ class Fish {
   // Update: location & acceleration
   void update() {
     velocity.add(acceleration); // update velocity
-    velocity.limit(maxSpeed);   // limit speed
+    velocity.limit((player) ? 2.2 : maxSpeed);   // limit speed (let players go faster)
     location.add(velocity);     // add velocity to location
     acceleration.mult(0);       // reset acceleration to 0 each cycle
   }
@@ -86,19 +87,47 @@ class Fish {
     float theta = velocity.heading2D() + radians(90);
     
     dangerLevel = dangerLevel - decayRate;
-   
-    fill(myColor, dangerLevel);
-    noStroke();
 
+    // if (player){
+    //   stroke(myColor);
+    //   strokeWeight(2);
+    //   fill(0, dangerLevel);
+    // } else if (nearPlayer){
+    //   stroke(255);
+    //   strokeWeight(2);
+    //   fill(myColor, dangerLevel);
+    // } else {
+    //   noStroke();  
+    //   fill(myColor, dangerLevel);
+    // }
+
+    strokeWeight(2);
+    stroke(myColor, dangerLevel);
+
+    if (player){
+      fill(myColor, dangerLevel);
+    } else if (nearPlayer){
+      fill(myColor, dangerLevel);
+    } else {
+      fill(0, dangerLevel);
+    }
+    
     pushMatrix();
       translate(location.x, location.y);
       rotate(theta);
       beginShape();
+
+      if (player){
+        r = 9;
+      };
+
       vertex(0, -r * 2);
       vertex(-r, r * 2);
       vertex(r, r * 2);
       endShape(CLOSE);
     popMatrix();
+
+    noStroke();
   }
 
   // --------------------------------------------------------------------
@@ -111,6 +140,8 @@ class Fish {
   // More information: http://www.red3d.com/cwr/boids/
   
   void flock(ArrayList < Fish > fishs) {
+
+    if (player) return;
     
     PVector separationForce = separation(fishs); //  1.) Seperation
     PVector alignmentForce = alignment(fishs);   //  2.) Alighment
@@ -258,11 +289,11 @@ class Fish {
 
     // Check proximity for ALL fish
     for (int i = swarms.size() - 1; i >= 0; i--) {
-      Swarm fish = swarms.get(i);
+      Swarm swarm = swarms.get(i);
     
       // Iterate through fish
-      for (int j = fish.fishs.size() - 1; j >= 0; j--){
-        Fish other = fish.fishs.get(j);
+      for (int j = swarm.fishs.size() - 1; j >= 0; j--){
+        Fish other = swarm.fishs.get(j);
 
         float d = PVector.dist(location, other.location);
         
@@ -274,7 +305,7 @@ class Fish {
           diff.normalize();
           diff.div(d); // Weight by distance
           sum.add(diff);
-          count
+          // count TODO
         }
       }
     }
@@ -316,12 +347,25 @@ class Fish {
     // neighborDistance defined as an instance variable
     PVector sum = new PVector(0, 0);
     int count = 0;
+
+    nearPlayer = false;
     
-    for (Fish other: fishs) {
+    for (Fish other : fishs) {
       float d = PVector.dist(location, other.location);
-      if ((d > 0) && (d < neighborDistance)) {
-        sum.add(other.velocity);
+
+      if ((d > 0) && (d < getNeighborDistance(other))) {
+        sum.add(other.velocity);  
         count++;
+
+        if (other.player) {
+          nearPlayer = true;
+
+          sum = new PVector(0, 0);
+          sum.add(other.velocity);  
+          count = 1;
+
+          break;
+        }
       }
     }
     
@@ -330,8 +374,9 @@ class Fish {
       sum.div((float) count);
       sum.normalize();
       sum.mult(maxSpeed);
-      PVector steer = PVector.sub(sum, velocity);
+      PVector steer = PVector.sub(sum, velocity);      
       steer.limit(maxForce);
+
       return steer;
     } else {
       return new PVector(0, 0);
@@ -348,16 +393,38 @@ class Fish {
 
     for (Fish other: fishs) {
       float d = PVector.dist(location, other.location);
-      if ((d > 0) && (d < neighborDistance)) {
-        sum.add(other.location); // Add location
+      if ((d > 0) && (d < getNeighborDistance(other))) {
+        sum.add(other.location);
         count++;
       }
     }
+
     if (count > 0) {
       sum.div(count);
       return seeking(sum); // Steer towards the location
     } else {
       return new PVector(0, 0);
+    }
+  }
+
+  // Boids are more likely to recognize player
+  // as a neighbor to respect.
+  float getNeighborDistance(other){
+    
+    // If other boid is the player, allow
+    // for a much farther distance leniency
+    if (other.player){
+      return neighborDistance * 2;
+    
+    // If other boid is near the player,
+    // slightly increase distance leniency
+    } if (other.nearPlayer) {
+      return neighborDistance * 1.5;
+    
+    // If boid is no where near a player,
+    // return the normal distance threshold
+    } else {
+      return neighborDistance;
     }
   }
 
@@ -367,18 +434,6 @@ class Fish {
     // Note: add mass here if you want acceleration = force / mass
     acceleration.add(force);
   }
-
-  // drawWanderTarget: draw the circle associated with wandering
-  // void drawWanderTarget(PVector location, PVector circle, PVector target, float rad) {
-  //   console.log("hey");
-  //   stroke(188, 188, 255);
-    
-  //   ellipseMode(CENTER);
-  //   ellipse(circle.x, circle.y, rad * 2, rad * 2);
-  //   ellipse(target.x, target.y, 4, 4);
-  //   line(location.x, location.y, circle.x, circle.y);
-  //   line(circle.x, circle.y, target.x, target.y);
-  // }
   
   // Fish eats. It's now full, and we can 
   // reset it's danger level
@@ -386,15 +441,44 @@ class Fish {
     dangerLevel = 255;
   }
 
+  // Player controlled movement
   void turn(int i){
-    console.log("Fish Tunrned")
-    console.log(velocity)
-    // velocity = velocity.rotate(HALF_PI * i);
 
+    // If player initializes movement, set
+    // the selected boid to "player". If
+    // player = true, then the boid will take
+    // less influence from neighbors
+    player = true;
+
+    debug(location.x, location.y);
+
+    // Create 2D PVectory. Apply rotate
     v = new PVector(velocity.x, velocity.y);
-    v.rotate(HALF_PI * i * .5);
+    v.rotate(HALF_PI * i * .2);
 
-    velocity = new PVector(v.x * 1.4, v.y * 1.4, 0);
+    // Convert 2D PVector into 3D
+    velocity = new PVector(v.x, v.y, 0);
+
+  }
+  
+  // Player controlled acceleration
+  void accelerate(int i){
+    player = true;
+
+    debug(location.x, location.y);
+    velocity.mult(1.0 + (i * .2));
+  }
+
+  // Print data about a specific boid
+  void debug(float x, float y){
+    
+
+    pushMatrix();
+      noFill();
+      strokeWeight(2);
+      stroke(204, 102, 0);
+      ellipse(location.x, location.y, 50, 50);
+    popMatrix();
 
   }
 };

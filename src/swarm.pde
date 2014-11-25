@@ -14,9 +14,9 @@ class Swarm {
   int score;
   boolean selected;  
   
-  Swarm() {
+  Swarm(color c_) {
     fishs = new ArrayList<Fish>();
-    c = makeNeonColor();
+    c = c_;
     score = startFish;
     selected = false;
   }
@@ -47,11 +47,6 @@ class Swarm {
       };
     }
 
-    if (selected){
-      // drawActiveMesh();
-      // Currently, does nothing.     
-    }
-    
     // Add a new fish for each fish that 
     // obtained food during this frame.
     while(reproducingFish.size() > 0){
@@ -76,29 +71,6 @@ class Swarm {
       // Return color
       color c = color(r,g,b);
       return c;
-    }
-  }
-  
-  void drawActiveMesh(){
-    float prevX = 0;
-    float prevY = 0;
-    
-    for (Fish fish : fishs) {
-      float diffX = abs(prevX - fish.location.x);
-      float diffY = abs(prevY - fish.location.y);
-      
-      boolean tooFar = diffX > 200 || diffY > 200;
-      
-      // Draw a rough mesh between selected nodes
-      if (prevX != 0 || prevY != 0) {
-        if (!tooFar){
-          stroke(204, 102, 0);
-          line(prevX, prevY, fish.location.x, fish.location.y);
-        }
-      }
-      
-      prevX = fish.location.x;
-      prevY = fish.location.y;
     }
   }
   
