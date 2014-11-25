@@ -88,19 +88,6 @@ class Fish {
     
     dangerLevel = dangerLevel - decayRate;
 
-    // if (player){
-    //   stroke(myColor);
-    //   strokeWeight(2);
-    //   fill(0, dangerLevel);
-    // } else if (nearPlayer){
-    //   stroke(255);
-    //   strokeWeight(2);
-    //   fill(myColor, dangerLevel);
-    // } else {
-    //   noStroke();  
-    //   fill(myColor, dangerLevel);
-    // }
-
     strokeWeight(2);
     stroke(myColor, dangerLevel);
 
