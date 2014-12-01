@@ -89,6 +89,19 @@ void setup() {
       s.addFish(random(0, screen.width), random(screen.height));
     }
   } 
+
+  // Initialize player fish.
+  // player = true, then the boid will take
+  // less influence from neighbors, as well
+  // as be controlled via keyboard controls
+
+  f = swarms.get(0).fishs.get(0);
+  f.player = true;
+
+  // Help player find their controlable fish
+
+  ripples.add(new Ripple(f.location.x, f.location.y, color(255, 255, 355)));
+
 }
 
 void draw() {
@@ -242,7 +255,7 @@ void removeOldFish(){
     // Iterate through fish
     for (int j = fish.fishs.size() - 1; j >= 0; j--){
       Fish f = fish.fishs.get(j);
-      if (f.dangerLevel < 0.2){
+      if (!f.player && f.dangerLevel < 0.2){
         ripples.add(new Ripple(f.location.x, f.location.y, color(120, 120, 120)));
         fish.fishs.remove(j);
       }

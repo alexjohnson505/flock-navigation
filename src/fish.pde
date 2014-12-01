@@ -38,7 +38,7 @@ class Fish {
   float damping = 100;           // arrival damping in pixels
   float neighborDistance = 50;   // cohesion variables
 
-  boolean player;                // Is this fish player controlled?
+  boolean player = false;                // Is this fish player controlled?
   boolean nearPlayer;            // Is this fish near a player controlled fish?
 
   /***************************
@@ -380,12 +380,6 @@ class Fish {
   // Player controlled movement
   void turn(int i){
 
-    // If player initializes movement, set
-    // the selected boid to "player". If
-    // player = true, then the boid will take
-    // less influence from neighbors
-    player = true;
-
     // debug(location.x, location.y);
 
     // Create 2D PVectory. Apply rotate
@@ -399,7 +393,6 @@ class Fish {
   
   // Player controlled acceleration
   void accelerate(int i){
-    player = true;
 
     // debug(location.x, location.y);
     velocity.mult(1.0 + (i * .2));
