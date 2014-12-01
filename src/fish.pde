@@ -92,7 +92,8 @@ class Fish {
     stroke(myColor, dangerLevel);
 
     if (player){
-      fill(myColor, dangerLevel);
+      stroke("FFFFFF");
+      fill(myColor, 100);
     } else if (nearPlayer){
       fill(myColor, dangerLevel);
     } else {
@@ -103,10 +104,6 @@ class Fish {
       translate(location.x, location.y);
       rotate(theta);
       beginShape();
-
-      if (player){
-        r = 9;
-      };
 
       vertex(0, -r * 2);
       vertex(-r, r * 2);
