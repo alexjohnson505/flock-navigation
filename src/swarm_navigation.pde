@@ -61,10 +61,17 @@ float decayRate = 0.1;
 // Accumulate momentum when turning
 float turnMomentum = 1;
 
+// Enables additional developer settings
+boolean debug = false;
+
 void setup() {
 
-  // size(screen.width, screen.height);
-  size(1000, 500);
+  if (debug){
+    size(1000, 500);
+  } else {
+    size(screen.width, screen.height);
+  }
+  
   
   food = new Food();
 
