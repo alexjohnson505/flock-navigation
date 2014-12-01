@@ -46,9 +46,12 @@ eating, they will fade away and die (yellow ripple).
 Click on the screen to place a new food item
 at the center of your cursor.
 
-Hold 'W' & 'S' to change the currently selected
-swarm. Notice how a white box is drawn around their
-color in the top left of the screen.
+Hold 'LEFT' &amp; 'RIGHT' to control the Player Fish's 
+direction. Hold 'UP' &amp; 'DOWN' to make slight 
+adjustments to acceleration. The Player Fish is a single, 
+blue fish with a white outline. The other blue fish are 
+your swarm. They will attempt to flock with you if you 
+are close by
 
 Upcoming Features:
 -------------
