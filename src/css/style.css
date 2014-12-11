@@ -11,3 +11,10 @@ a {
 	max-width: 400px;
 	font-size: 18px;
 }
+
+p {
+	font-family: sans-serif;
+	letter-spacing: 1px;
+	font-weight: 100;
+	color: #999;
+}
