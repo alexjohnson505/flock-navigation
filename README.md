@@ -10,6 +10,14 @@ behaviour. This project was inspired by [Craig Reynold](http://www.red3d.com/cwr
 work in creating algorithms to emulate the behaviour of organic
 creatures. 
 
+I wanted the experience to instill a sense of 'companionship' 
+with the other creatures in your swarm. I purposefully reduced
+the turn speed, and turn radius of the player fish. This 
+forces the player into a movement scheme similar to his 
+neighbors. As a result of slower turning radius, the player
+must collect, and rely on the fish in their swarm to make a 
+difference in the environment.
+
 Demo:
 -------------
 Online: [alexjohnson.io/swarm-navigation](http://alexjohnson.io/swarm-navigation)
@@ -27,7 +35,7 @@ food, they will fade away and die.
 You control a single fish. The Player Fish is a single, 
 blue fish with a **white outline**. The other blue fish are 
 your swarm. They will attempt to flock with you if you 
-are close by
+are close by.
 
 Hold down the '**LEFT**' &amp; '**RIGHT**' arrow keys to
 control the Player Fish's direction. Hold '**UP**' &amp; 
@@ -46,7 +54,7 @@ Inspiration
 The above quote is from Craig Reynold’s online writings on boids.
 This project was inspired by the chaotic, yet beautiful nature
 of organic creatures. I wanted to create an interactive experience
-that piggy-backed on this theme. 
+that used this theme as a gameplay mechanic.
 
 
 Running:
@@ -54,16 +62,19 @@ Running:
 
 > Running swarm-navigation on your computer
 
-Load src/index.html from a web server. To run locally, I 
-recommend installing MAMP, and pointing the root directory 
-to swarm-navigation/src. This sets up a local HTTP server. 
-
-You can then load the project from locahost:8080.
+Load src/index.html from a web server. To run locally, 
+load swarm-navigation/src from an HTTP Server. On Mac
+OSX, I recommend using MAMP, a desktop app for running
+local Apache servers.
 
 Boids
 -------------
 
-This project is inspired by [Craig Reynolds](http://www.red3d.com/cwr/index.html)' research in modeling flocking behaviour. Reynolds was influenced by the animal motions of flocks such as birds, or fish schools. Reynolds referred to his generic [simulated flocking creatures as Boids](http://www.red3d.com/cwr/boids/).
+This project is inspired by [Craig Reynolds](http://www.red3d.com/cwr/index.html)' 
+research in modeling flocking behaviour. Reynolds 
+was influenced by the animal motions of flocks 
+such as birds, or fish schools. Reynolds referred 
+to his generic [simulated flocking creatures as Boids](http://www.red3d.com/cwr/boids/).
 
 To quote Craig Reynolds, 
 
