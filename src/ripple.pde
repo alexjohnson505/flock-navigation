@@ -25,6 +25,7 @@ class Ripple {
   }
   
   void draw(){
+    
     // Float between 0.0 and 1.0
     float scale = (float)currentFrame / (float)maxFrame;
     

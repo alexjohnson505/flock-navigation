@@ -4,7 +4,6 @@
  *********************************/
 
 // Swarm represents a grouping of fish. 
-// Original code example from  IM 2250 Programming for Digital Media, Fall 2014
 class Swarm {
   
   // Yes, I am aware "fishs" is grammatically 

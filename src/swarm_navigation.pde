@@ -17,11 +17,6 @@
 // Click on the screen to place a new food item
 // at the center of your cursor.
 
-// Press 'W' & 'S' to change the currently selected
-// swarm. Notice how a white box is drawn around their
-// color in the top left owf the screen. Press 'D' to 
-// grant extra fish to the currently selected swarm
-
 /********************************/
 
 import java.util.Iterator;
@@ -36,9 +31,6 @@ PVector initAcceleration = new PVector(0, 0);
 ArrayList<Ripple> ripples = new ArrayList<Ripple>();
 ArrayList<Swarm> swarms = new ArrayList<Swarm>();
 
-// Init player character
-// PlayerSwarm playerSwarm = new PlayerSwarm();
-
 Food food;
 
 /*******************************
@@ -49,7 +41,6 @@ int startSwarms = 4;   // Starting Swarms
 int startFish   = 20;  // Initial fish per swarm
 
 // Rate of food regeneration
-// (default) 20 game ticks per new food;
 int foodRegenCounter = 0;
 int foodRegenThreshold = 15;
 
@@ -71,7 +62,6 @@ void setup() {
   } else {
     size(screen.width, screen.height);
   }
-  
   
   food = new Food();
 
@@ -99,7 +89,6 @@ void setup() {
   f.player = true;
 
   // Help player find their controlable fish
-
   ripples.add(new Ripple(f.location.x, f.location.y, color(255, 255, 355)));
 
 }
@@ -152,14 +141,6 @@ void renderHUDitem(Swarm s, int i){
 
     // More info:
     text(s.countFish(), 30, 0);
-
-    // Display indicator for currently selected swarm 
-    if (s.selected) {
-      noFill();
-      stroke(2);
-      stroke(255, 255, 255);
-      rect(-5, -16, 29, 22);
-    }
    
   popMatrix();
   noStroke();

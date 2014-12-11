@@ -38,7 +38,7 @@ class Fish {
   float damping = 100;           // arrival damping in pixels
   float neighborDistance = 50;   // cohesion variables
 
-  boolean player = false;                // Is this fish player controlled?
+  boolean player = false;        // Is this fish player controlled?
   boolean nearPlayer;            // Is this fish near a player controlled fish?
 
   /***************************
@@ -66,7 +66,7 @@ class Fish {
     velocity = new PVector(0, 0);
   }
 
-  // Fly: Iterate & update swarm. Update/border/display
+  // Fly: Iterate & update swarm.
   void fly(ArrayList < Fish > fishs) {
     flock(fishs);
     update();
@@ -77,7 +77,10 @@ class Fish {
   // Update: location & acceleration
   void update() {
     velocity.add(acceleration); // update velocity
-    velocity.limit((player) ? 2.2 : maxSpeed);   // limit speed (let players go faster)
+     
+    // limit speed (let players go faster)
+    velocity.limit((player) ? 2.2 : maxSpeed);  
+
     location.add(velocity);     // add velocity to location
     acceleration.mult(0);       // reset acceleration to 0 each cycle
   }
@@ -190,34 +193,36 @@ class Fish {
   }
 
   // Arrive: Calculate steering force towards a target.
-  // Apply damping to avoid overshooting
-  // demonstrates "desired minus velocity"
+  // Apply damping to avoid overshooting (desired minus velocity)
   void arrive(PVector target) {
 
     // desired is a vector pointing from our location to the target
     PVector desired = PVector.sub(target, location);
     float dmag = desired.mag();
 
-    // normalize desired and scale w/ arbitrary damping within 100 pixels
+    // normalize desired. Scale within 100px
     desired.normalize();
     if (dmag < damping) {
 
-      // we are close to the target, slooooooooow down
+      // Slow down when close to target
       float mag = map(dmag, 0, damping, 0, maxSpeed);
       desired.mult(mag);
     } else {
 
-      // otherwise proceed at full speed
+      // Otherwise, full speed
       desired.mult(maxSpeed);
     }
 
     // steer = desired - velocity
     PVector steer = PVector.sub(desired, velocity);
-    steer.limit(maxForce); // limit to maximum steering force
+    
+    // limit to maximum steering force
+    steer.limit(maxForce); 
     applyForce(steer);
   }
 
   // Borders: Support wrap-around movement 
+  // aka "pacman" world traversal
   void borders() {
     if (location.x < -r) location.x = width + r;
     if (location.y < -r) location.y = height + r;
@@ -399,15 +404,13 @@ class Fish {
   }
 
   // Print data about a specific boid
+  // Used for debugging collisions
   void debug(float x, float y){
-    
-
     pushMatrix();
       noFill();
       strokeWeight(2);
       stroke(204, 102, 0);
       ellipse(location.x, location.y, 50, 50);
     popMatrix();
-
   }
 };
